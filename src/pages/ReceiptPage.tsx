@@ -3,6 +3,7 @@ const ReceiptPage = () => {
     <div className='container mx-auto p-4'>
       <h1 className='text-3xl font-bold mb-4'>Receipt Page</h1>
       <p>This is the Receipt Page</p>
+      <p>dddddd</p>
     </div>
   )
 }
