@@ -1,10 +1,16 @@
+import DesktopLayout from './layouts/DesktopLayout'
+import MobileLayout from './layouts/MobileLayout'
 
 function App() {
   return (
     <>
-      <div>
-        <h1 className='text-3xl font-bold text-blue-300 '>vite + react + tailwind + zustand basic environment</h1>
+      {/* 모바일 레이아웃 (기본) */}
+      <div className='md:hidden h-screen'>
+        <MobileLayout />
       </div>
+
+      {/* 데스크탑 레이아웃 (중앙 정렬) */}
+      <DesktopLayout />
     </>
   )
 }
