@@ -5,6 +5,7 @@ import DetailPage from '../pages/DetailPage'
 import ReceiptPage from '../pages/ReceiptPage'
 import ReviewPage from '../pages/ReviewPage'
 import SettingPage from '../pages/SettingPage'
+import Review_result from '../pages/Review_result'
 
 export default function AppRouter() {
   const location = useLocation()
@@ -25,6 +26,10 @@ export default function AppRouter() {
         <Route
           path='/receipt'
           element={<ReceiptPage />}
+        />
+        <Route
+          path='/review_result'
+          element={<Review_result />}
         />
         <Route
           path='/review'
