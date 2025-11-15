@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import marker_orange from '../assets/marker_orange.svg'
 import setting_icon from '../assets/setting_icon.svg'
-// import spoon from '../assets/spoon.svg'
 import search from '../assets/search.svg'
+
+import TopStoresSlider from '../components/TopStoresSlider'
 
 const HomePage = () => {
   const navigate = useNavigate()
@@ -129,7 +130,7 @@ const HomePage = () => {
             />
           </button>
         </div>
-        <div className='relative mt-4'>
+        <div className='relative mt-8'>
           <img
             src={search}
             alt='Search Icon'
@@ -144,9 +145,13 @@ const HomePage = () => {
       </header>
 
       {/* 메인 컨텐츠: 80% */}
-      <main className='h-[80vh] relative'>
-        <div className='h-[50vh] relative '>
-          <div className='p-5 h-full '>
+      <main className='p-5'>
+        {/* 이번 달 추천 가게 Top5 */}
+        <TopStoresSlider />
+
+        {/* map */}
+        <div className='h-[40vh]'>
+          <div className='h-full '>
             <div
               ref={mapContainer}
               className='w-full h-full rounded-2xl'
