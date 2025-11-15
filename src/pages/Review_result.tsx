@@ -47,6 +47,27 @@ const Review_result = () => {
                 </div>
             </div>
             {/* 인증실패시 보여질 화면 */}
+            <div>
+                <div className="flex flex-col items-center justify-cente pt-65">
+                    <div className="relative w-28 h-28">
+                        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M34.833 0.75C53.6566 0.75 68.9168 16.0095 68.917 34.833C68.917 53.6567 53.6567 68.917 34.833 68.917C16.0095 68.9168 0.75 53.6566 0.75 34.833C0.750175 16.0096 16.0096 0.750175 34.833 0.75Z" fill="#D6D6D6" stroke="#D6D6D6" stroke-width="1.5"/>
+                        </svg>
+                        <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18.6667 2L2 18.6667L18.6667 2ZM2 2L18.6667 18.6667L2 2Z" fill="#D6D6D6"/>
+                            <path d="M18.6667 2L2 18.6667M2 2L18.6667 18.6667" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <p className="text-xl">영수증 인증 실패</p>
+                    <p>상호명과 결제카드를 확인해주세요.</p>
+                </div>
+                <div className="flex justify-center pt-75">
+                    <button className="w-[430px] h-[50px] bg-[#FC7E2A] rounded-md p-2 text-white twxt-center"
+                    onClick={handleBack}>
+                    다시 인증하기
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

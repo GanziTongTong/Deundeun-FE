@@ -1,15 +1,36 @@
+import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom"
+
+interface StoreDetail {
+  storeId: number;
+  name: string;
+  category: string;
+  operatingTime: string;
+  mainItems: string;
+}
 
 const ReceiptPage = () => {
   const navigate = useNavigate();
 
-  const handleBack = () =>{
-      navigate(-1);
-  };
+  const handleBack = () =>{ navigate(-1);};
 
-  const handleNext =() => {
-    navigate("/review_result")
-  }
+  const handleNext =() => {navigate("/review_result")};
+
+  const [store, setStore] = useState<StoreDetail | null>(null);
+
+  useEffect(() => {
+    const fetchStore = async () => {
+      try {
+        const res = await fetch("http://localhost:8080/api/store/detail?storeId=1");
+        const data = await res.json();
+        setStore(data);
+      } catch (err) {
+        console.error("가게 정보 불러오기 실패:", err);
+      }
+    };
+
+    fetchStore();
+  }, []);
 
   return (
     <div className='container mx-auto p-4 pt-10'>
@@ -25,8 +46,16 @@ const ReceiptPage = () => {
       </div>
       {/* 2 */}
       <div className="bg-gray-300 mx-[17px] w-[450px] h-[80px] p-2 rounded-md">
-        <h5>통통빵집</h5>
-        <p className="pt-[5px]">경기 수원시 영통구 영통로 344 1층</p>
+        {!store ? (
+          <p>가게 정보 불러오는 중...</p>
+        ) : (
+          <>
+            <h5 className='font-bold'>{store.name}</h5>
+            <p className="pt-[5px] text-sm text-gray-700">
+              운영시간: {store.operatingTime}
+            </p>
+          </>
+        )}
       </div>
       {/* 3 */}
       <h5 className="pt-[28px] p-2 mx-[13px] font-bold text-xl ">구매 인증 방식</h5>
