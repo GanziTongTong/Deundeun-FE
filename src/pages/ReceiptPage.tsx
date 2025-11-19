@@ -35,9 +35,7 @@ const ReceiptPage = () => {
 
       // invoice 또는 receipt가 아니면 바로 거부
       if (classificationResult.type !== 'invoice' && classificationResult.type !== 'receipt') {
-        alert('올바른 영수증이 아닙니다. 영수증 이미지를 다시 업로드해주세요.')
-        setPreview(null)
-        setIsUploading(false)
+        navigate('/review_result?success=false')
         return
       }
 
@@ -48,9 +46,7 @@ const ReceiptPage = () => {
         const isValidReceipt = verifyReceiptWithStoreName(ocrResult.text, storeName)
 
         if (!isValidReceipt) {
-          alert(`이 영수증은 "${storeName}" 가게의 영수증이 아닙니다. 올바른 영수증을 업로드해주세요.`)
-          setPreview(null)
-          setIsUploading(false)
+          navigate('/review_result?success=false')
           return
         }
 
@@ -58,12 +54,10 @@ const ReceiptPage = () => {
       }
 
       // 모든 검증 통과
-      alert('영수증 인증이 완료되었습니다!')
-      navigate('/review_result')
+      navigate('/review_result?success=true')
     } catch (error) {
       console.error('영수증 인증 실패:', error)
-      alert('영수증 인증에 실패했습니다. 다시 시도해주세요.')
-      setPreview(null)
+      navigate('/review_result?success=false')
     } finally {
       setIsUploading(false)
     }
@@ -72,7 +66,7 @@ const ReceiptPage = () => {
   return (
     <div className='container mx-auto p-4 pt-10'>
       {/* 1 */}
-      <Previous text="영수증 인증"/>
+      <Previous text='영수증 인증' />
       {/* 2 */}
       <Information />
       {/* 3 */}

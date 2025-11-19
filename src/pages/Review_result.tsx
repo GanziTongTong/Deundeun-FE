@@ -1,32 +1,26 @@
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import Previous from './Previous'
 
 const Review_result = () => {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  // URL에서 성공/실패 여부 가져오기
+  const isUploadSuccess = searchParams.get('success') === 'true'
+
   const handleNext = () => {
     navigate('/review')
   }
   const handleBack = () => {
-    navigate('/receipt')
+    navigate(-1) // 이전 페이지(ReceiptPage)로 돌아가기
   }
-
-  const [isUploadSuccess, setIsUploadSuccess] = useState(true) // 임시로 true값으로 주어 성공화면만 보일 수 있도록!
-
-  setIsUploadSuccess(true)
-
-  // 예를 들어 업로드가 끝나면 호출해서 성공 상태 지정
-  // 실제로는 파일 업로드 후 결과에 따라 setIsUploadSuccess(true/false) 호출
-  // 지금은 임시로 성공 화면 보여주도록 설정
 
   return (
     <div className='container mx-auto p-4 pt-10'>
       {/* 1 */}
       <Previous />
       {/* 2 */}
-      {isUploadSuccess === null ? (
-        <p className='text-center text-gray-500'>인증 결과를 기다리는 중입니다...</p>
-      ) : isUploadSuccess ? (
+      {isUploadSuccess ? (
         // 업로드 성공 화면
         <div className='flex flex-col justify-between py-40'>
           <div className='flex flex-col items-center justify-center pt-16'>
