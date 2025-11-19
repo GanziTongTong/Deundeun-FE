@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Previous from "./Previous";
 import Information from "./Information";
 
@@ -6,6 +7,9 @@ const ReviewPage = () => {
   const [images, setImages] = useState<File[]>([]);
   const [selectedButtons, setSelectedButtons] = useState<string[]>([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const navigate = useNavigate();
+  
 
   //후기선택
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +39,7 @@ const ReviewPage = () => {
   const handlePopupConfirm = () => {
     setIsPopupOpen(false); 
     alert("리뷰가 등록되었습니다!"); 
+    navigate('/');
   };
   const handlePopupCancel = () => { setIsPopupOpen(false); };
 
@@ -51,15 +56,15 @@ const ReviewPage = () => {
           <h4 className="text-gray-600 ">어떤 점이 좋았나요? ({selectedButtons.length}/3)</h4>
         </div>
         {/* 후기 버튼 임시 디자인 */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 text-[#444444]">
           {["맛있었어요", "혼밥하기 좋아요", "양이 많아요","사장님이 반겨주셨어요", "서비스가 친절해요", "재료가 신선해요"].map((text) => (
             <button
               key={text}
               onClick={() => handleButtonClick(text)}
               className={`border p-2 rounded-md text-center text-sm ${
                 selectedButtons.includes(text)
-                  ? "border-[#FC7E2A] text-[#FC7E2A] bg-white"
-                  : "bg-gray-300 border-gray-300"
+                  ? "border-[#FC7E2A] text-[#FC7E2A] bg-white font-semibold"
+                  : "bg-gray-100 border-gray-100 font-semibold"
               }`}
             > 
             {text}
