@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { StoreCategory } from '../types/store'
+import type { StoreCategory } from '../types/store'
 
 const ALL_CATEGORIES: StoreCategory[] = ['CHILD_MEAL_CARD', 'GOOD_NEIGHBOR_STORE', 'GOOD_INFLUENCE_STORE']
 

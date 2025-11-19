@@ -1,26 +1,22 @@
 import { useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-// import axios from 'axios';
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import Previous from './Previous'
 import Information from './Information'
+import { classifyDocument, performOCR, verifyReceiptWithStoreName } from '../services/documentClassification'
 
 const ReceiptPage = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
+  const [isUploading, setIsUploading] = useState(false)
+  const [searchParams] = useSearchParams()
 
   const navigate = useNavigate()
 
+  // URL에서 가게명 가져오기 (예: /receipt?storeName=BHC치킨)
+  const storeName = searchParams.get('storeName') || ''
+
   const handleButtonClick = () => {
     fileInputRef.current?.click()
-  }
-
-  const uploadFile = (file: File) => {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        console.log('가짜 업로드 성공!')
-        resolve()
-      }, 4000)
-    })
   }
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,41 +24,55 @@ const ReceiptPage = () => {
     if (!file) return
 
     setPreview(URL.createObjectURL(file))
+    setIsUploading(true)
 
     console.log('사용자가 선택한 파일:', file)
 
     try {
-      await uploadFile(file) // 백엔드 연결 전까지는 가짜 업로드
-      navigate('/review_result') // 업로드 끝나면 페이지 이동
+      // 1단계: 문서 분류 API 호출
+      const classificationResult = await classifyDocument(file)
+      console.log('문서 분류 결과:', classificationResult.type)
+
+      // invoice 또는 receipt가 아니면 바로 거부
+      if (classificationResult.type !== 'invoice' && classificationResult.type !== 'receipt') {
+        alert('올바른 영수증이 아닙니다. 영수증 이미지를 다시 업로드해주세요.')
+        setPreview(null)
+        setIsUploading(false)
+        return
+      }
+
+      // 2단계: OCR로 텍스트 추출 및 가게명 검증
+      if (storeName) {
+        console.log('🔍 2차 검증 시작: 가게명 확인')
+        const ocrResult = await performOCR(file)
+        const isValidReceipt = verifyReceiptWithStoreName(ocrResult.text, storeName)
+
+        if (!isValidReceipt) {
+          alert(`이 영수증은 "${storeName}" 가게의 영수증이 아닙니다. 올바른 영수증을 업로드해주세요.`)
+          setPreview(null)
+          setIsUploading(false)
+          return
+        }
+
+        console.log('✅ 2차 검증 통과: 가게명 일치')
+      }
+
+      // 모든 검증 통과
+      alert('영수증 인증이 완료되었습니다!')
+      navigate('/review_result')
     } catch (error) {
-      console.error('업로드 실패', error)
-      alert('업로드 실패했습니다!')
+      console.error('영수증 인증 실패:', error)
+      alert('영수증 인증에 실패했습니다. 다시 시도해주세요.')
+      setPreview(null)
+    } finally {
+      setIsUploading(false)
     }
   }
-
-  //   const uploadFile = async (file) => {
-  //   const formData = new FormData();
-  //   formData.append("image", file); // "image"는 서버에서 받는 필드 이름
-
-  //   try {
-  //     const res = await axios.post("https://your-server.com/upload", formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     });
-
-  //     console.log("업로드 성공!", res.data);
-  //     alert("업로드 완료!");
-  //   } catch (err) {
-  //     console.error("업로드 실패:", err);
-  //     alert("업로드 실패함!");
-  //   }
-  // };
 
   return (
     <div className='container mx-auto p-4 pt-10'>
       {/* 1 */}
-      <Previous />
+      <Previous text="영수증 인증"/>
       {/* 2 */}
       <Information />
       {/* 3 */}
@@ -105,8 +115,9 @@ const ReceiptPage = () => {
           <button
             className='group flex flex-col items-center justify-center p-4 rounded-md border-3 border-gray-300 w-[200px]
               hover:border-[#FC7E2A]
-              transition-colors duration-300'
-            onClick={handleButtonClick}>
+              transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
+            onClick={handleButtonClick}
+            disabled={isUploading}>
             <svg
               width='40'
               height='40'
@@ -130,7 +141,7 @@ const ReceiptPage = () => {
           {/* 선택한 이미지 미리보기 */}
           {preview && (
             <div className='mt-4 w-[200px]'>
-              <p>미리보기:</p>
+              <p className='text-sm text-gray-600 mb-2'>{isUploading ? '검증 중...' : '미리보기:'}</p>
               <img
                 src={preview}
                 alt='preview'

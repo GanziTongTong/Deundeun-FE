@@ -17,6 +17,12 @@ export const storeApi = {
     const response = await apiClient.post<Store[]>('/store', params)
     return response.data
   },
+
+  // 가게 상세 정보 조회
+  getStoreDetail: async (storeId: string): Promise<Store> => {
+    const response = await apiClient.get<Store>(`/store/detail?storeId=${storeId}`)
+    return response.data
+  },
 }
 
 export default apiClient

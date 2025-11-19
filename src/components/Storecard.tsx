@@ -35,7 +35,7 @@ export default function StoreCard({ rank, name, address, category, foodType, dis
       {/* 주소와 거리 */}
       <div className='flex items-center justify-between mb-3'>
         <p className='text-sm flex-1 text-[#222]'>{address}</p>
-        <span className='text-sm text-[#AAA] font-bold ml-2 whitespace-nowrap'>{distance}</span>
+        <div className='text-sm text-[#AAA] font-bold ml-2 whitespace-nowrap cursor-none'>{distance}</div>
       </div>
 
       {/* 음식 타입 */}

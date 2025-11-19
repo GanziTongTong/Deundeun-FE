@@ -416,7 +416,7 @@ const HomePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}>
-            {selectedStores.length > 1 && <p className='text-sm text-gray-600 font-bold'>이 위치에 {selectedStores.length}개의 가게가 있습니다</p>}
+            {selectedStores.length > 1 && <p className='text-sm text-center text-gray-600 bg-'>이 위치에 {selectedStores.length}개의 가게가 있어요</p>}
             {selectedStores.map((store) => (
               <div
                 key={store.storeId}
