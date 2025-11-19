@@ -23,6 +23,7 @@ const HomePage = () => {
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_MAP_API_KEY}&autoload=false`
     script.async = true
     document.head.appendChild(script)
+    console.log(userLocation)
 
     console.log(import.meta.env.VITE_KAKAO_MAP_API_KEY)
 
