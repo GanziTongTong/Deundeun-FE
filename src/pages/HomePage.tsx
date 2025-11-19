@@ -6,12 +6,16 @@ import setting_icon from '../assets/setting_icon.svg'
 import search from '../assets/search.svg'
 
 import TopStoresSlider from '../components/TopStoresSlider'
+import LocationModal from '../components/LocationModal'
+import { useLocationStore } from '../store/useLocationStore'
 
 const HomePage = () => {
   const navigate = useNavigate()
   const mapContainer = useRef<HTMLDivElement>(null)
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
   const [locationError, setLocationError] = useState<string | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { selectedDistrict } = useLocationStore()
 
   // Kakao Maps SDK 동적 로드
   useEffect(() => {
@@ -57,8 +61,8 @@ const HomePage = () => {
   }, [])
 
   useEffect(() => {
-    // 사용자 위치를 얻은 후에만 지도 초기화
-    if (!userLocation) return
+    // 선택된 지역 정보를 사용하여 지도 초기화
+    const location = selectedDistrict || { lat: 37.2596, lng: 127.0464 }
 
     // Kakao Maps SDK 로드 확인 및 초기화
     const initializeMap = () => {
@@ -71,20 +75,20 @@ const HomePage = () => {
         if (!mapContainer.current) return
 
         const options = {
-          center: new window.kakao.maps.LatLng(userLocation.lat, userLocation.lng),
+          center: new window.kakao.maps.LatLng(location.lat, location.lng),
           level: 3, // 지도 확대 레벨
         }
 
         const map = new window.kakao.maps.Map(mapContainer.current, options)
 
         // 현재 위치에 마커 추가
-        const markerPosition = new window.kakao.maps.LatLng(userLocation.lat, userLocation.lng)
+        const markerPosition = new window.kakao.maps.LatLng(location.lat, location.lng)
         const marker = new window.kakao.maps.Marker({
           position: markerPosition,
         })
         marker.setMap(map)
 
-        console.log('카카오맵 초기화 완료 - 사용자 위치:', userLocation)
+        console.log('카카오맵 초기화 완료 - 위치:', location)
       })
     }
 
@@ -101,7 +105,7 @@ const HomePage = () => {
 
       return () => clearInterval(checkKakaoLoaded)
     }
-  }, [userLocation])
+  }, [selectedDistrict])
 
   return (
     <motion.div
@@ -113,14 +117,16 @@ const HomePage = () => {
       {/* 헤더 영역 - 20% */}
       <header className='h-[20%] bg-white shadow-sm px-4 flex flex-col justify-center'>
         <div className='flex justify-between items-center'>
-          <div className='text-2xl font-bold flex items-center cursor-pointer'>
+          <button
+            className='text-2xl font-bold flex items-center cursor-pointer'
+            onClick={() => setIsModalOpen(true)}>
             <img
               src={marker_orange}
               alt='Marker Orange'
               className='mr-2'
             />
-            위치선택
-          </div>
+            수원시 {selectedDistrict.name}
+          </button>
           <button
             className='cursor-pointer'
             onClick={() => navigate('/setting')}>
@@ -159,6 +165,12 @@ const HomePage = () => {
           </div>
         </div>
       </main>
+
+      {/* 위치 선택 모달 */}
+      <LocationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </motion.div>
   )
 }
