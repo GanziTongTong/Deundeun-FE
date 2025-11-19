@@ -63,7 +63,7 @@ export default function TopStoresSlider() {
       {/* 헤더 */}
       <div>
         <h2 className='text-2xl font-bold mb-2 flex items-center gap-2'>🏆 이번 달 추천 가게 Top5</h2>
-        <p className='text-base text-gray-600'>망포동에서 가장 후기가 좋은 가게예요</p>
+        <p className='text-base text-gray-600'>영통구에서 가장 후기가 좋은 가게예요</p>
       </div>
 
       {/* 슬라이더 */}

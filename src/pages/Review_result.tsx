@@ -11,7 +11,7 @@ const Review_result = () => {
     navigate('/receipt')
   }
 
-  const [isUploadSuccess, setIsUploadSuccess] = useState(false) // 임시로 true값으로 주어 성공화면만 보일 수 있도록!
+  const [isUploadSuccess, setIsUploadSuccess] = useState(true) // 임시로 true값으로 주어 성공화면만 보일 수 있도록!
 
   setIsUploadSuccess(true)
 

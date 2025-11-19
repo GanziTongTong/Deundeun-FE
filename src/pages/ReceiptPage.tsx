@@ -14,7 +14,7 @@ const ReceiptPage = () => {
     fileInputRef.current?.click()
   }
 
-  const uploadFile = () => {
+  const uploadFile = (file: File) => {
     return new Promise<void>((resolve) => {
       setTimeout(() => {
         console.log('가짜 업로드 성공!')
@@ -32,7 +32,7 @@ const ReceiptPage = () => {
     console.log('사용자가 선택한 파일:', file)
 
     try {
-      await uploadFile() // 백엔드 연결 전까지는 가짜 업로드
+      await uploadFile(file) // 백엔드 연결 전까지는 가짜 업로드
       navigate('/review_result') // 업로드 끝나면 페이지 이동
     } catch (error) {
       console.error('업로드 실패', error)

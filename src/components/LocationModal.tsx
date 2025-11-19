@@ -70,29 +70,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
               </div>
 
               {/* 선택된 구 표시 */}
-              {selectedDistrict && (
-                <div className='bg-orange-50 px-4 py-3 rounded-lg flex items-center justify-between cursor-pointer w-[1/2]'>
-                  <span className='text-sm text-orange-600 font-medium'>수원시 {selectedDistrict.name}</span>
-                  <button
-                    onClick={onClose}
-                    className='text-orange-600 hover:text-orange-700'>
-                    <svg
-                      className='w-5 h-5 cursor-pointer'
-                      fill='none'
-                      viewBox='0 0 24 24'
-                      stroke='currentColor'>
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        strokeWidth={2}
-                        d='M6 18L18 6M6 6l12 12'
-                      />
-                    </svg>
-                  </button>
-                </div>
-              )}
 
-              {/* 하단 여백 (아이폰 노치 대응) */}
               <div className='h-8' />
             </div>
           </motion.div>
