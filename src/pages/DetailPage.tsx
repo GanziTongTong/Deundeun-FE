@@ -18,7 +18,7 @@ const DetailPage = () => {
 
       try {
         setIsLoading(true)
-        await new Promise(resolve => setTimeout(resolve, 100000)) // 1초 대기
+        // await new Promise(resolve => setTimeout(resolve, 100000)) // 100초 대기
         const data = await storeApi.getStoreDetail(storeId)
         setStoreDetail(data)
       } catch (error) {
