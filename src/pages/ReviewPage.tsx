@@ -51,7 +51,10 @@ const ReviewPage = () => {
       {/* 1 */}
       <Previous />
       {/* 2 */}
-      <Information storeName=''/>
+      <Information
+        storeName=''
+        storeAddress=''
+      />
       {/* 3 */}
       <div className='mb-6 mt-6'>
         <div className='mb-4'>
