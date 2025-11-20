@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import Previous from './Previous'
+import Previous from '../components/Previous'
 
 const Review_result = () => {
   const navigate = useNavigate()

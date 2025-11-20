@@ -10,6 +10,31 @@ export interface Store {
   longitude: number
 }
 
+export interface ReviewImage {
+  imageId: number
+  imageUrl: string
+}
+
+export interface ReviewKeywords {
+  keywords: string[]
+}
+
+export interface Review {
+  reviewId: number
+  images: ReviewImage[]
+  keywords: ReviewKeywords
+}
+
+export interface StoreDetail {
+  storeId: number
+  name: string
+  category: string
+  address: string
+  phoneNumber: string | null
+  openingHours: string | null
+  reviews: Review[]
+}
+
 export interface StoreRequest {
   user_latitude: number
   user_longitude: number

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import Previous from './Previous'
+import Previous from '../components/Previous'
 import Information from './Information'
 import { classifyDocument, performOCR, verifyReceiptWithStoreName } from '../services/documentClassification'
 
@@ -12,8 +12,10 @@ const ReceiptPage = () => {
 
   const navigate = useNavigate()
 
-  // URL에서 가게명 가져오기 (예: /receipt?storeName=BHC치킨)
+  // URL에서 가게 정보 가져오기
   const storeName = searchParams.get('storeName') || ''
+  const storeAddress = searchParams.get('storeAddress') || ''
+  const storeId = searchParams.get('storeId') || ''
 
   const handleButtonClick = () => {
     fileInputRef.current?.click()
@@ -27,6 +29,9 @@ const ReceiptPage = () => {
     setIsUploading(true)
 
     console.log('사용자가 선택한 파일:', file)
+    console.log('가게 이름 (검증용):', storeName)
+    console.log('가게 주소 (검증용):', storeAddress)
+    console.log('가게 ID (검증용):', storeId)
 
     try {
       // 1단계: 문서 분류 API 호출
@@ -68,13 +73,16 @@ const ReceiptPage = () => {
       {/* 1 */}
       <Previous text='영수증 인증' />
       {/* 2 */}
-      <Information />
+      <Information
+        storeName={storeName}
+        storeAddress={storeAddress}
+      />
       {/* 3 */}
-      <h5 className='pt-[28px] p-2 mx-[13px] font-bold text-xl '>구매 인증 방식</h5>
-      <div className='grid grid-cols-2 gap-10 items-start text-center mx-[20px] pt-[5px]'>
+      <h5 className='pt-[28px] p-2 px-4 font-bold text-xl'>구매 인증 방식</h5>
+      <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 px-4 pt-[5px]'>
         {/* 카드 결제 버튼 */}
         <button
-          className='group flex flex-col items-center justify-center p-4 rounded-md border-3 border-gray-300 w-[200px]
+          className='group flex flex-col items-center justify-center p-6 rounded-lg border-2 border-gray-300 w-full
             hover:border-[#FC7E2A]
             transition-colors duration-300'>
           <svg
@@ -98,7 +106,7 @@ const ReceiptPage = () => {
         </button>
 
         {/* 영수증 버튼 */}
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col items-center w-full'>
           <input
             type='file'
             accept='image/*'
@@ -107,7 +115,7 @@ const ReceiptPage = () => {
             onChange={handleFileChange}
           />
           <button
-            className='group flex flex-col items-center justify-center p-4 rounded-md border-3 border-gray-300 w-[200px]
+            className='group flex flex-col items-center justify-center p-6 rounded-lg border-2 border-gray-300 w-full
               hover:border-[#FC7E2A]
               transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
             onClick={handleButtonClick}
@@ -134,16 +142,25 @@ const ReceiptPage = () => {
 
           {/* 선택한 이미지 미리보기 */}
           {preview && (
-            <div className='mt-4 w-[200px]'>
+            <div className='mt-4 w-full max-w-[300px]'>
               <p className='text-sm text-gray-600 mb-2'>{isUploading ? '검증 중...' : '미리보기:'}</p>
               <img
                 src={preview}
                 alt='preview'
-                className='w-full h-[150px] object-cover rounded-md'
+                className='w-full h-auto max-h-[200px] object-cover rounded-md'
               />
             </div>
           )}
         </div>
+      </div>
+
+      {/* 임시 성공 버튼 */}
+      <div className='px-4 mt-8'>
+        <button
+          onClick={() => navigate('/review_result?success=true')}
+          className='w-full py-3 bg-green-500 text-white font-bold rounded-lg hover:bg-green-600 active:bg-green-700 transition-colors'>
+          임시: 성공으로 이동
+        </button>
       </div>
     </div>
   )
