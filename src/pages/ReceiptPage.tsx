@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import Previous from '../components/Previous'
-import Information from './Information'
+import Information from '../components/Information'
 import { classifyDocument, performOCR, verifyReceiptWithStoreName } from '../services/documentClassification'
 
 const ReceiptPage = () => {

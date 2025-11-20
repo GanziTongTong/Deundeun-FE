@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Previous from '../components/Previous'
-import Information from './Information'
+import Information from '../components/Information'
 
 const ReviewPage = () => {
   const [images, setImages] = useState<File[]>([])
