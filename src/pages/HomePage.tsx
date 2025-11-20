@@ -47,6 +47,7 @@ const HomePage = () => {
   // States
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedStores, setSelectedStores] = useState<Store[]>([])
+  const [searchKeyword, setSearchKeyword] = useState('')
 
   // Store hooks
   const { selectedDistrict } = useLocationStore()
@@ -86,6 +87,13 @@ const HomePage = () => {
       }
     )
   }, [])
+
+  // 검색 핸들러
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && searchKeyword.trim()) {
+      navigate(`/search?keyword=${encodeURIComponent(searchKeyword.trim())}`)
+    }
+  }
 
   // 지도 레벨에서 반경(km) 계산
   const getRadiusFromLevel = (level: number): number => {
@@ -360,8 +368,11 @@ const HomePage = () => {
           />
           <input
             type='text'
-            placeholder='메뉴 또는 가게명으로 검색해보세요'
+            placeholder='매장명으로 검색해보세요'
             className='w-full py-3 pl-12 pr-4 rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-400'
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
+            onKeyDown={handleSearch}
           />
         </div>
       </header>

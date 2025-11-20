@@ -2,7 +2,9 @@ import AppRouter from '../router'
 
 export default function MobileLayout() {
   return (
-    <div className='h-full bg-white'>
+    <div
+      className='h-full bg-white'
+      style={{ userSelect: 'none' }}>
       <AppRouter />
     </div>
   )

@@ -23,6 +23,33 @@ export const storeApi = {
     const response = await apiClient.get<Store>(`/store/detail?storeId=${storeId}`)
     return response.data
   },
+
+  // 이번 달 추천 가게 Top5 (리뷰 많은 순)
+  getTopStores: async (lat: number, lng: number, radiusKm: number = 5): Promise<Store[]> => {
+    const response = await apiClient.post<{ stores: Store[] }>('/store', {
+      user_latitude: lat,
+      user_longitude: lng,
+      radiusKm,
+      category: 'CHILD_MEAL_CARD',
+    })
+    // 리뷰 많은 순으로 정렬 후 상위 5개 반환 (현재는 거리순으로 임시 처리)
+    return response.data.stores.slice(0, 5)
+  },
+
+  // 가게명 검색
+  searchStores: async (keyword: string): Promise<Store[]> => {
+    // 사용자 위치 가져오기
+    const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject)
+    })
+
+    const response = await apiClient.post<{ stores: Store[] }>(`/store/search?keyword=${encodeURIComponent(keyword)}`, {
+      user_latitude: position.coords.latitude,
+      user_longitude: position.coords.longitude,
+      radiusKm: 5,
+    })
+    return response.data.stores
+  },
   //https://deundeun.duckdns.org/api/reviews 가게 리뷰 등록
   //   {
   // 	"storeId": 1,

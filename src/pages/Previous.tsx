@@ -2,12 +2,18 @@ import { useNavigate } from 'react-router-dom'
 
 interface PreviousProps {
   text?: string
+  navigateTo?: string
 }
 
-const Previous = ({ text }: PreviousProps) => {
+const Previous = ({ text, navigateTo = '-1' }: PreviousProps) => {
   const navigate = useNavigate()
   const handleBack = () => {
-    navigate(-1)
+    // 숫자 문자열이면 뒤로가기, 경로 문자열이면 해당 경로로 이동
+    if (navigateTo.startsWith('/')) {
+      navigate(navigateTo)
+    } else {
+      navigate(parseInt(navigateTo))
+    }
   }
   return (
     <div className='relative flex mb-12 items-center '>

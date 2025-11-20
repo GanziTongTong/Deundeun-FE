@@ -1,6 +1,12 @@
+import { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination } from 'swiper/modules'
+import { useNavigate } from 'react-router-dom'
 import StoreCard from './Storecard'
+import { storeApi } from '../services/api'
+import { useLocationStore } from '../store/useLocationStore'
+import type { Store } from '../types/store'
+import SpoonLoader from './SpoonLoader'
 
 // Swiper 스타일 import
 // @ts-ignore: CSS side-effect import has no type declarations
@@ -8,62 +14,54 @@ import 'swiper/css'
 // @ts-ignore: CSS side-effect import has no type declarations
 import 'swiper/css/pagination'
 
-// 더미 데이터
-const dummyStores = [
-  {
-    storeId: 1,
-    name: '동동빵집',
-    category: ['CHILD_MEAL_CARD', 'GOOD_INFLUENCE_STORE', 'GOOD_NEIGHBOR_STORE'],
-    operatingTime: '07:00-21:30',
-    items: '소금빵, 단팥빵',
-    address: '경기 수원시 영통구 영통로 391 2층',
-    distance: '6분',
-  },
-  {
-    storeId: 2,
-    name: '삼성분식',
-    category: ['CHILD_MEAL_CARD'],
-    operatingTime: '09:00-20:00',
-    items: '떡볶이, 김밥',
-    address: '경기 수원시 영통구 영통로 385',
-    distance: '5분',
-  },
-  {
-    storeId: 3,
-    name: '상호명',
-    category: ['CHILD_MEAL_CARD', 'GOOD_INFLUENCE_STORE'],
-    operatingTime: '10:00-22:00',
-    items: '제공 음식명',
-    address: '경기 수원시 영통구 영통로 391 2층',
-    distance: '6분',
-  },
-  {
-    storeId: 4,
-    name: '행복식당',
-    category: ['GOOD_NEIGHBOR_STORE'],
-    operatingTime: '11:00-20:00',
-    items: '한식 백반',
-    address: '경기 수원시 영통구 영통로 400',
-    distance: '8분',
-  },
-  {
-    storeId: 5,
-    name: '착한카페',
-    category: ['CHILD_MEAL_CARD', 'GOOD_INFLUENCE_STORE'],
-    operatingTime: '08:00-22:00',
-    items: '음료, 샌드위치',
-    address: '경기 수원시 영통구 영통로 410',
-    distance: '10분',
-  },
-]
-
 export default function TopStoresSlider() {
+  const navigate = useNavigate()
+  const { selectedDistrict } = useLocationStore()
+  const [topStores, setTopStores] = useState<Store[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchTopStores = async () => {
+      try {
+        setIsLoading(true)
+        const stores = await storeApi.getTopStores(selectedDistrict.lat, selectedDistrict.lng, 3)
+        setTopStores(stores)
+      } catch (error) {
+        console.error('Top5 가게 로드 실패:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchTopStores()
+  }, [selectedDistrict])
+  if (isLoading) {
+    return (
+      <div>
+        <h2 className='text-2xl font-bold mb-2 flex items-center gap-2'>🏆 이번 달 추천 가게</h2>
+        <p className='text-base text-gray-600'>{selectedDistrict.name}에서 가장 후기가 좋은 가게에요</p>
+        <div className='flex items-center justify-center py-20'>
+          <SpoonLoader />
+        </div>
+      </div>
+    )
+  }
+
+  if (topStores.length === 0) {
+    return (
+      <div>
+        <h2 className='text-2xl font-bold mb-2 flex items-center gap-2'>🏆 이번 달 추천 가게</h2>
+        <p className='text-base text-gray-600'>{selectedDistrict.name}에 추천 가게가 없습어요</p>
+      </div>
+    )
+  }
+
   return (
     <div>
       {/* 헤더 */}
       <div>
-        <h2 className='text-2xl font-bold mb-2 flex items-center gap-2'>🏆 이번 달 추천 가게 Top5</h2>
-        <p className='text-base text-gray-600'>영통구에서 가장 후기가 좋은 가게예요</p>
+        <h2 className='text-2xl font-bold mb-2 flex items-center gap-2'>🏆 이번 달 추천 가게</h2>
+        <p className='text-base text-gray-600'>{selectedDistrict.name}에서 가장 후기가 좋은 가게에요</p>
       </div>
 
       {/* 슬라이더 */}
@@ -76,18 +74,21 @@ export default function TopStoresSlider() {
           clickable: true,
           dynamicBullets: false,
         }}>
-        {dummyStores.map((store, index) => (
+        {topStores.map((store, index) => (
           <SwiperSlide
             key={store.storeId}
-            className='bg-orange py-10 px-2'>
-            <StoreCard
-              rank={index + 1}
-              name={store.name}
-              address={store.address}
-              category={store.category}
-              foodType={store.items}
-              distance={store.distance}
-            />
+            className='bg-orange py-10 px-2'
+            onClick={() => navigate(`/detail?storeId=${store.storeId}`)}>
+            <div className='cursor-pointer'>
+              <StoreCard
+                rank={index + 1}
+                name={store.name}
+                address={store.address}
+                category={store.categories}
+                foodType='한식'
+                distance={`${(store.distance * 1000).toFixed(0)}m`}
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

@@ -4,6 +4,7 @@ import { storeApi } from '../services/api'
 import type { Store } from '../types/store'
 import Previous from './Previous'
 import spoonIcon from '../assets/spoon.svg'
+import SpoonLoader from '../components/SpoonLoader'
 
 const DetailPage = () => {
   const navigate = useNavigate()
@@ -42,7 +43,7 @@ const DetailPage = () => {
       <div className='container mx-auto p-4 pt-10'>
         <Previous text='' />
         <div className='flex flex-col items-center justify-center min-h-[70vh]'>
-          <div className='animate-spin rounded-full h-16 w-16 border-b-5 border-orange-500'></div>
+          <SpoonLoader />
           <p className='mt-4 text-gray-600'>가게 정보를 불러오는 중이에요...</p>
         </div>
       </div>

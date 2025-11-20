@@ -10,6 +10,7 @@ function App() {
       </div>
 
       {/* 데스크탑 레이아웃 (중앙 정렬) */}
+
       <DesktopLayout />
     </>
   )
