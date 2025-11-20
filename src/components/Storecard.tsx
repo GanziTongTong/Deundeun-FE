@@ -1,7 +1,6 @@
 import spoonIcon from '../assets/spoon.svg'
 
 interface StoreCardProps {
-  rank: number
   name: string
   address: string
   category: string[]

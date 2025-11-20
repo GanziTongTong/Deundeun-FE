@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import Previous from './Previous'
+import Previous from '../components/Previous'
 import StoreCard from '../components/Storecard'
 import { storeApi } from '../services/api'
 import type { Store } from '../types/store'
@@ -189,13 +189,12 @@ const SearchPage = () => {
         ) : (
           <>
             <div className='space-y-3'>
-              {displayedStores.map((store, idx) => (
+              {displayedStores.map((store) => (
                 <div
                   key={store.storeId}
                   className='cursor-pointer'
-                  onClick={() => navigate(`/detail?storeId=${store.storeId}`)}>
+                  onClick={() => navigate(`/detail?storeId=${store.storeId}&distance=${store.distance}`)}>
                   <StoreCard
-                    rank={''}
                     name={store.name}
                     address={store.address}
                     category={store.categories}

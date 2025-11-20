@@ -24,6 +24,12 @@ export const storeApi = {
     return response.data
   },
 
+  // 가게 상세 정보 + 리뷰 조회
+  getStoreDetailWithReviews: async (storeId: string) => {
+    const response = await apiClient.get(`/store/detail?storeId=${storeId}`)
+    return response.data
+  },
+
   // 이번 달 추천 가게 Top5 (리뷰 많은 순)
   getTopStores: async (lat: number, lng: number, radiusKm: number = 5): Promise<Store[]> => {
     const response = await apiClient.post<{ stores: Store[] }>('/store', {

@@ -49,4 +49,4 @@ const Information = () => {
     );
 };
 
-export default Information;
+export default Information

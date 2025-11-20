@@ -432,9 +432,8 @@ const HomePage = () => {
               <div
                 key={store.storeId}
                 className='cursor-pointer'
-                onClick={() => navigate(`/detail?storeId=${store.storeId}`)}>
+                onClick={() => navigate(`/detail?storeId=${store.storeId}&distance=${store.distance}`)}>
                 <StoreCard
-                  rank={0}
                   name={store.name}
                   address={store.address}
                   category={store.categories}

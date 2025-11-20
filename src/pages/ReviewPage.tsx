@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Previous from './Previous'
+import Previous from '../components/Previous'
 import Information from './Information'
 
 const ReviewPage = () => {
@@ -51,7 +51,10 @@ const ReviewPage = () => {
       {/* 1 */}
       <Previous text='영수증 인증' />
       {/* 2 */}
-      <Information />
+      <Information
+        storeName=''
+        storeAddress=''
+      />
       {/* 3 */}
       <div className='mb-6 mt-6'>
         <div className='mb-4'>

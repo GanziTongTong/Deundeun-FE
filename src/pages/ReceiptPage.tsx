@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import Previous from './Previous'
+import Previous from '../components/Previous'
 import Information from './Information'
 import { classifyDocument, performOCR, verifyReceiptWithStoreName } from '../services/documentClassification'
 
@@ -13,6 +13,8 @@ const ReceiptPage = () => {
   const navigate = useNavigate()
 
   const storeName = searchParams.get('storeName') || ''
+  const storeAddress = searchParams.get('storeAddress') || ''
+  const storeId = searchParams.get('storeId') || ''
 
   const handleButtonClick = () => {
     fileInputRef.current?.click()
@@ -57,7 +59,10 @@ const ReceiptPage = () => {
       {/* 1 */}
       <Previous text='영수증 인증' />
       {/* 2 */}
-      <Information />
+      <Information
+        storeName={storeName}
+        storeAddress={storeAddress}
+      />
       {/* 3 */}
       <h5 className='pt-[28px] p-2 mx-[13px] font-bold text-xl'>구매 인증 방식</h5>
       <div className='grid grid-cols-2 gap-4 pt-5 w-full justify-items-center'>
@@ -87,7 +92,7 @@ const ReceiptPage = () => {
         </button>
 
         {/* 영수증 버튼 */}
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col items-center w-full'>
           <input
             type='file'
             accept='image/*'
@@ -129,11 +134,20 @@ const ReceiptPage = () => {
               <img
                 src={preview}
                 alt='preview'
-                className='w-full h-[150px] object-cover rounded-md'
+                className='w-full h-auto max-h-[200px] object-cover rounded-md'
               />
             </div>
           )}
         </div>
+      </div>
+
+      {/* 임시 성공 버튼 */}
+      <div className='px-4 mt-8'>
+        <button
+          onClick={() => navigate('/review_result?success=true')}
+          className='w-full py-3 bg-green-500 text-white font-bold rounded-lg hover:bg-green-600 active:bg-green-700 transition-colors'>
+          임시: 성공으로 이동
+        </button>
       </div>
     </div>
   )

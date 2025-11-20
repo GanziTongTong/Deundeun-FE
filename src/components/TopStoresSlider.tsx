@@ -74,14 +74,13 @@ export default function TopStoresSlider() {
           clickable: true,
           dynamicBullets: false,
         }}>
-        {topStores.map((store, index) => (
+        {topStores.map((store) => (
           <SwiperSlide
             key={store.storeId}
             className='bg-orange py-10 px-2'
-            onClick={() => navigate(`/detail?storeId=${store.storeId}`)}>
+            onClick={() => navigate(`/detail?storeId=${store.storeId}&distance=${store.distance}`)}>
             <div className='cursor-pointer'>
               <StoreCard
-                rank={index + 1}
                 name={store.name}
                 address={store.address}
                 category={store.categories}
