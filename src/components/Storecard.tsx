@@ -15,12 +15,12 @@ const categoryLabels: Record<string, string> = {
   GOOD_NEIGHBOR_STORE: '좋은이웃가게',
 }
 
-export default function StoreCard({ rank, name, address, category, foodType, distance }: StoreCardProps) {
+export default function StoreCard({  name, address, category, foodType, distance }: StoreCardProps) {
   return (
     <div className='bg-white px-4 py-3 min-w-[280px] rounded-2xl shadow-[0px_0px_4px_0px_rgba(0,0,0,0.15)] '>
       {/* 헤더 - 랭킹과 아이콘 */}
       <div className='flex items-center mb-3 text-[#222]'>
-        {parseInt(distance) > 200 ? <div className='bg-[#FF6B35] text-white text-xs font-bold py-1 px-2 rounded mr-2'>{rank}</div> : null}
+        {/* {parseInt(distance) > 200 ? <div className='bg-[#FF6B35] text-white text-xs font-bold py-1 px-2 rounded mr-2'>{rank}</div> : null} */}
 
         <img
           src={spoonIcon}
