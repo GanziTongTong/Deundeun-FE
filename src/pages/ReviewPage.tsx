@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Previous from '../components/Previous'
-import Information from './Information'
+import Information from '../components/Information'
 
 const ReviewPage = () => {
   const [images, setImages] = useState<File[]>([])
@@ -53,7 +53,7 @@ const ReviewPage = () => {
       {/* 2 */}
       <Information />
       {/* 3 */}
-      <div className='mb-6 mt-6'>
+      <div className='mb-6 mt-15 '>
         <div className='mb-4'>
           <h2 className='text-lg font-semibold'>후기 선택</h2>
           <h4 className='text-gray-600 '>어떤 점이 좋았나요? ({selectedButtons.length}/3)</h4>
@@ -66,31 +66,19 @@ const ReviewPage = () => {
               <button
                 key={text}
                 onClick={() => handleButtonClick(text)}
-                className={`border px-4 py-2.5 rounded-md text-center text-sm 
+                className={`border px-4 py-2.5 rounded-md text-center text-sm cursor-pointer
                 ${selectedButtons.includes(text) ? 'border-[#FC7E2A] text-[#FC7E2A] bg-white font-semibold' : 'bg-gray-100 border-gray-200 font-semibold'}`}>
                 {text}
               </button>
             ))}
           </div>
           {/* 두 번째 줄 (2열) */}
-          <div className='grid grid-cols-2 gap-3 gap-y-4 text-[#444444]'>
-            {['사장님이 반겨주셨어요', '서비스가 친절해요'].map((text) => (
+          <div className='grid grid-cols-3 gap-3 gap-y-4 text-[#444444]'>
+            {['사장님이 반겨주셨어요', '서비스가 친절해요', '재료가 신선해요'].map((text) => (
               <button
                 key={text}
                 onClick={() => handleButtonClick(text)}
-                className={`border px-4 py-2.5 rounded-md text-center text-sm 
-                ${selectedButtons.includes(text) ? 'border-[#FC7E2A] text-[#FC7E2A] bg-white font-semibold' : 'bg-gray-100 border-gray-200 font-semibold'}`}>
-                {text}
-              </button>
-            ))}
-          </div>
-          {/* 세 번째 줄 (1열) */}
-          <div className='grid grid-cols-1 gap-y-4 text-[#444444]'>
-            {['재료가 신선해요'].map((text) => (
-              <button
-                key={text}
-                onClick={() => handleButtonClick(text)}
-                className={`border px-4 py-2.5 rounded-md text-center text-sm 
+                className={`border px-4 py-2.5 rounded-md text-center text-sm cursor-pointer
                 ${selectedButtons.includes(text) ? 'border-[#FC7E2A] text-[#FC7E2A] bg-white font-semibold' : 'bg-gray-100 border-gray-200 font-semibold'}`}>
                 {text}
               </button>
@@ -99,11 +87,11 @@ const ReviewPage = () => {
         </div>
       </div>
       {/* 4 */}
-      <div className='mb-6'>
+      <div className='mb-6 mt-20 '>
         <h2 className='text-lg font-semibold'>이미지 등록</h2>
         <p className='text-gray-600 mb-4'>매장 또는 음식 사진을 등록해 주세요 (선택)</p>
         <div className='flex space-x-4'>
-          <div className='flex flex-col items-center border py-4 px-6 rounded-md'>
+          <div className='flex flex-col items-center border py-4 px-6 rounded-md cursor-pointer'>
             <input
               type='file'
               className='hidden'
@@ -183,7 +171,7 @@ const ReviewPage = () => {
       <div className='text-center'>
         <button
           onClick={handleReviewSubmit}
-          className='bg-[#FC7E2A] text-white py-3 px-6 rounded-md font-semibold w-full mt-6'>
+          className='bg-[#FC7E2A] text-white py-3 px-6 rounded-md font-semibold w-full mt-6 cursor-pointer'>
           리뷰 등록
         </button>
       </div>
@@ -201,12 +189,12 @@ const ReviewPage = () => {
             <div className='flex justify-between mt-6 space-x-3'>
               <button
                 onClick={handlePopupCancel}
-                className='flex-1 bg-white text-gray-700 font-semibold py-3 px-6 rounded-md border border-gray-300'>
+                className='flex-1 bg-white text-gray-700 font-semibold py-3 px-6 rounded-md border border-gray-300 cursor-pointer'>
                 취소
               </button>
               <button
                 onClick={handlePopupConfirm}
-                className='flex-1 bg-orange-400 text-white font-semibold py-3 px-6 rounded-md'>
+                className='flex-1 bg-orange-400 text-white font-semibold py-3 px-6 rounded-md cursor-pointer'>
                 확인
               </button>
             </div>
