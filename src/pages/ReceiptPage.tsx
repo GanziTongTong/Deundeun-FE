@@ -13,9 +13,6 @@ const ReceiptPage = () => {
   const navigate = useNavigate()
 
   const storeName = searchParams.get('storeName') || ''
-  const storeAddress = searchParams.get('storeAddress') || ''
-  const storeId = searchParams.get('storeId') || ''
-
   const handleButtonClick = () => {
     fileInputRef.current?.click()
   }
@@ -59,10 +56,7 @@ const ReceiptPage = () => {
       {/* 1 */}
       <Previous text='영수증 인증' />
       {/* 2 */}
-      <Information
-        storeName={storeName}
-        storeAddress={storeAddress}
-      />
+      <Information />
       {/* 3 */}
       <h5 className='pt-[28px] p-2 mx-[13px] font-bold text-xl'>구매 인증 방식</h5>
       <div className='grid grid-cols-2 gap-4 pt-5 w-full justify-items-center'>
@@ -70,16 +64,14 @@ const ReceiptPage = () => {
         <button
           className='group flex flex-col items-center justify-center p-4 rounded-md border-3 border-gray-300
           w-[150px] sm:w-[180px] md:w-[200px]
-          hover:border-[#FC7E2A] transition-colors duration-300'
-        >
+          hover:border-[#FC7E2A] transition-colors duration-300'>
           <svg
             width='30'
             height='30'
             className='mb-2 text-gray-500 group-hover:text-[#FC7E2A] transition-colors duration-300 sm:w-[35px] sm:h-[35px] md:w-[40px] md:h-[40px]'
             fill='currentColor'
             viewBox='0 0 40 40'
-            xmlns='http://www.w3.org/2000/svg'
-          >
+            xmlns='http://www.w3.org/2000/svg'>
             <path
               fillRule='evenodd'
               clipRule='evenodd'
@@ -87,7 +79,9 @@ const ReceiptPage = () => {
             />
           </svg>
           <p className='text-gray-700 text-xs sm:text-sm md:text-base text-center'>
-            카드 결제내역<br />인증하기
+            카드 결제내역
+            <br />
+            인증하기
           </p>
         </button>
 
@@ -105,16 +99,14 @@ const ReceiptPage = () => {
             w-[150px] sm:w-[180px] md:w-[200px]
             hover:border-[#FC7E2A] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
             onClick={handleButtonClick}
-            disabled={isUploading}
-          >
+            disabled={isUploading}>
             <svg
               width='30'
               height='30'
               className='mb-2 text-gray-500 group-hover:text-[#FC7E2A] transition-colors duration-300 sm:w-[35px] sm:h-[35px] md:w-[40px] md:h-[40px]'
               viewBox='0 0 40 40'
               fill='currentColor'
-              xmlns='http://www.w3.org/2000/svg'
-            >
+              xmlns='http://www.w3.org/2000/svg'>
               <path
                 fillRule='evenodd'
                 clipRule='evenodd'
@@ -122,15 +114,15 @@ const ReceiptPage = () => {
               />
             </svg>
             <p className='text-center text-gray-700 text-xs sm:text-sm md:text-base'>
-              영수증으로<br />인증하기
+              영수증으로
+              <br />
+              인증하기
             </p>
           </button>
           {/* 이미지 미리보기 */}
           {preview && (
             <div className='mt-4 w-[150px] sm:w-[180px] md:w-[200px]'>
-              <p className='text-sm text-gray-600 mb-2'>
-                {isUploading ? '검증 중...' : '미리보기:'}
-              </p>
+              <p className='text-sm text-gray-600 mb-2'>{isUploading ? '검증 중...' : '미리보기:'}</p>
               <img
                 src={preview}
                 alt='preview'
