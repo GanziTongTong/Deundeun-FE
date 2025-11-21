@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { storeApi } from '../services/api'
 import type { StoreDetail } from '../types/store'
+import { useStoreDetailStore } from '../store/useStoreDetailStore'
 import Previous from '../components/Previous'
 import spoonIcon from '../assets/spoon.svg'
 import clockIcon from '../assets/clock_icon.png'
@@ -12,9 +13,10 @@ import SpoonLoader from '../components/SpoonLoader'
 
 const DetailPage = () => {
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
-  const storeId = searchParams.get('storeId')
-  const distanceParam = searchParams.get('distance')
+  const { selectedStore } = useStoreDetailStore()
+  const storeId = selectedStore?.storeId.toString()
+  const distanceParam = selectedStore?.distance
+  const storeCategories = selectedStore?.categories || []
   const [storeDetail, setStoreDetail] = useState<StoreDetail | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
@@ -104,8 +106,8 @@ const DetailPage = () => {
   // 모든 이미지 수집
   const allImages = storeDetail.reviews.flatMap((review) => review.images.map((img) => img.imageUrl))
 
-  // 거리 표시 (query parameter에서 가져옴)
-  const distance = distanceParam ? `${(parseFloat(distanceParam) * 1000).toFixed(0)}m` : '정보 없음'
+  // 거리 표시 (state에서 가져옴)
+  const distance = distanceParam ? `${(distanceParam * 1000).toFixed(0)}m` : '정보 없음'
 
   return (
     <motion.div
@@ -113,11 +115,11 @@ const DetailPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}>
-      <div className='container mx-auto p-4 pt-10 pb-20'>
+      <div className='container mx-auto pt-10 pb-20'>
         <Previous text='가게 정보' />
 
         {/* 가게 이름 */}
-        <div className='mt-6'>
+        <div className='mt-6 p-4'>
           <div className='flex items-center gap-2 mb-4'>
             <img
               src={spoonIcon}
@@ -189,11 +191,19 @@ const DetailPage = () => {
 
           {/* 카테고리 태그 */}
           <div className='flex flex-wrap gap-2 mt-6'>
-            <span className='bg-[#FFF4DF] text-[#FF6B35] text-xs py-1.5 px-3 rounded-lg'>{getCategoryLabel(storeDetail.category)}</span>
+            {storeCategories.map((category, index) => (
+              <span
+                key={index}
+                className='bg-[#FFF4DF] text-[#FF6B35] text-xs py-1.5 px-3 rounded-lg'>
+                {getCategoryLabel(category)}
+              </span>
+            ))}
           </div>
 
+          <div className='bg-[#F5F5F5] h-2 my-6 -mx-4' />
+
           {/* 영수증 리뷰 후기 섹션 */}
-          <div className='mt-8 p-6 bg-gray-50 rounded-lg'>
+          <div className='mt-8 p-6 rounded-lg'>
             <h2 className='text-lg font-bold mb-2'>영수증 리뷰 후기</h2>
             <p className='text-sm text-gray-600 mb-4'>방문한 유저들이 영수증을 인증한 날짜 후기에요</p>
 
@@ -249,7 +259,7 @@ const DetailPage = () => {
       {/* 이미지 모달 */}
       {selectedImage && (
         <div
-          className='fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4'
+          className='fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4'
           onClick={() => setSelectedImage(null)}>
           <div className='relative max-w-4xl w-full'>
             <button

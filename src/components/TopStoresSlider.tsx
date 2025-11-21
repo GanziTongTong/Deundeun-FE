@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import StoreCard from './Storecard'
 import { storeApi } from '../services/api'
 import { useLocationStore } from '../store/useLocationStore'
+import { useStoreDetailStore } from '../store/useStoreDetailStore'
 import type { Store } from '../types/store'
 import SpoonLoader from './SpoonLoader'
 
@@ -17,6 +18,7 @@ import 'swiper/css/pagination'
 export default function TopStoresSlider() {
   const navigate = useNavigate()
   const { selectedDistrict } = useLocationStore()
+  const { setSelectedStore } = useStoreDetailStore()
   const [topStores, setTopStores] = useState<Store[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -51,7 +53,7 @@ export default function TopStoresSlider() {
     return (
       <div>
         <h2 className='text-2xl font-bold mb-2 flex items-center gap-2'>🏆 이번 달 추천 가게</h2>
-        <p className='text-base text-gray-600'>{selectedDistrict.name}에 추천 가게가 없습어요</p>
+        <p className='text-base text-gray-600'>{selectedDistrict.name}에 추천 가게가 없어요</p>
       </div>
     )
   }
@@ -78,7 +80,10 @@ export default function TopStoresSlider() {
           <SwiperSlide
             key={store.storeId}
             className='bg-orange py-10 px-2'
-            onClick={() => navigate(`/detail?storeId=${store.storeId}&distance=${store.distance}`)}>
+            onClick={() => {
+              setSelectedStore({ storeId: store.storeId, distance: store.distance, categories: store.categories })
+              navigate('/detail')
+            }}>
             <div className='cursor-pointer'>
               <StoreCard
                 name={store.name}
