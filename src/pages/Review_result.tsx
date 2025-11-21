@@ -60,7 +60,7 @@ const Review_result = () => {
           </div>
           <div className='flex justify-center pt-57'>
             <button
-              className='w-[430px] h-[50px] bg-[#FC7E2A] rounded-md p-2 text-white text-center font-semibold'
+              className='mt-8 px-6 py-3 bg-orange-500 text-white font-bold rounded-lg hover:bg-orange-600 active:bg-orange-700 transition-colors w-full cursor-pointer'
               onClick={handleNext}>
               리뷰 작성하기
             </button>
@@ -108,7 +108,7 @@ const Review_result = () => {
           </div>
           <div className='flex justify-center pt-57'>
             <button
-              className='w-[430px] h-[50px] bg-[#FC7E2A] rounded-md p-2 text-white text-center text-semibold'
+              className='mt-8 px-6 py-3 bg-orange-500 text-white font-bold rounded-lg hover:bg-orange-600 active:bg-orange-700 transition-colors w-full cursor-pointer'
               onClick={handleBack}>
               다시 인증하기
             </button>
