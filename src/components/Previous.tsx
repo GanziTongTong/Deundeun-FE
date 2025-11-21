@@ -35,7 +35,7 @@ const Previous = ({ text, navigateTo = '-1' }: PreviousProps) => {
           />
         </svg>
       </button>
-      {text && <h1 className='text-2xl text-center mx-auto'>{text}</h1>}
+      {text && <h1 className='text-2xl text-center mx-auto font-bold'>{text}</h1>}
     </div>
   )
 }
