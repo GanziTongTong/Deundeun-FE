@@ -81,7 +81,7 @@ export default function TopStoresSlider() {
             key={store.storeId}
             className='bg-orange py-10 px-2'
             onClick={() => {
-              setSelectedStore({ storeId: store.storeId, distance: store.distance, categories: store.categories })
+              setSelectedStore({ storeId: store.storeId, distance: store.distance, categories: store.categories, phoneNumber: store.phoneNumber, openingHours: store.openingHours })
               navigate('/detail')
             }}>
             <div className='cursor-pointer'>
@@ -89,8 +89,9 @@ export default function TopStoresSlider() {
                 name={store.name}
                 address={store.address}
                 category={store.categories}
-                foodType='한식'
                 distance={`${(store.distance * 1000).toFixed(0)}m`}
+                phoneNumber={store.phoneNumber}
+                openingHours={store.openingHours}
               />
             </div>
           </SwiperSlide>

@@ -17,6 +17,8 @@ const DetailPage = () => {
   const storeId = selectedStore?.storeId.toString()
   const distanceParam = selectedStore?.distance
   const storeCategories = selectedStore?.categories || []
+  const phoneNumberFromStore = selectedStore?.phoneNumber
+  const openingHoursFromStore = selectedStore?.openingHours
   const [storeDetail, setStoreDetail] = useState<StoreDetail | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
@@ -112,9 +114,10 @@ const DetailPage = () => {
   return (
     <motion.div
       className='min-h-screen bg-white'
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}>
+      exit={{ opacity: 0, x: -30 }}
+      transition={{ duration: 0.5 }}>
       <div className='container mx-auto pt-10 pb-20'>
         <Previous text='가게 정보' />
 
@@ -141,7 +144,7 @@ const DetailPage = () => {
                 className='w-5 h-5 mt-1'
               />
               <div className='flex-1'>
-                <p className='text-gray-700'>{storeDetail.openingHours || '정보 없음'}</p>
+                <p className='text-gray-700'>{openingHoursFromStore || storeDetail.openingHours || '정보 없음'}</p>
               </div>
             </div>
 
@@ -153,11 +156,11 @@ const DetailPage = () => {
                 className='w-5 h-5 mt-1'
               />
               <div className='flex-1'>
-                {storeDetail.phoneNumber ? (
+                {phoneNumberFromStore || storeDetail.phoneNumber ? (
                   <a
-                    href={`tel:${storeDetail.phoneNumber}`}
+                    href={`tel:${phoneNumberFromStore || storeDetail.phoneNumber}`}
                     className='text-gray-700 hover:text-orange-500 transition-colors'>
-                    {storeDetail.phoneNumber}
+                    {phoneNumberFromStore || storeDetail.phoneNumber}
                   </a>
                 ) : (
                   <p className='text-gray-700'>정보 없음</p>
@@ -250,7 +253,7 @@ const DetailPage = () => {
           {/* 리뷰 작성 버튼 */}
           <button
             onClick={handleWriteReview}
-            className='mt-8 px-6 py-3 bg-orange-500 text-white font-bold rounded-lg hover:bg-orange-600 active:bg-orange-700 transition-colors w-full'>
+            className='cursor-pointer mt-8 px-6 py-3 bg-orange-500 text-white font-bold rounded-lg hover:bg-orange-600 active:bg-orange-700 transition-colors w-full'>
             리뷰 작성하기
           </button>
         </div>
@@ -263,7 +266,7 @@ const DetailPage = () => {
           onClick={() => setSelectedImage(null)}>
           <div className='relative max-w-4xl w-full'>
             <button
-              className='absolute top-4 right-4 text-white text-3xl font-bold hover:text-gray-300'
+              className='cursor-pointer absolute top-4 right-4 text-white text-3xl font-bold hover:text-gray-300'
               onClick={() => setSelectedImage(null)}>
               ×
             </button>

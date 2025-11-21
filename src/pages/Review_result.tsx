@@ -1,4 +1,5 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import Previous from '../components/Previous'
 
 const Review_result = () => {
@@ -16,9 +17,14 @@ const Review_result = () => {
   }
 
   return (
-    <div className='container mx-auto p-4 pt-10'>
+    <motion.div
+      className='container mx-auto p-4 pt-10'
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, x: -30 }}
+      transition={{ duration: 0.5 }}>
       {/* 1 */}
-      <Previous text='영수증 인증'/>
+      <Previous text='영수증 인증' />
       {/* 2 */}
       {isUploadSuccess ? (
         // 업로드 성공 화면
@@ -104,7 +110,7 @@ const Review_result = () => {
               </svg>
             </div>
             <p className='text-xl font-bold'>영수증 인증 실패</p>
-            <p className='pb-16 text-s text-[#444444]'>상호명과 결제카드를 확인해주세요.</p>
+            <p className='pb-16 text-s text-[#444444]'>상호명을 확인해주세요</p>
           </div>
           <div className='flex justify-center pt-57'>
             <button
@@ -115,7 +121,7 @@ const Review_result = () => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }
 

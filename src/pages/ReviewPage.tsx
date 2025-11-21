@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import Previous from '../components/Previous'
 import Information from '../components/Information'
 
@@ -102,7 +103,12 @@ const ReviewPage = () => {
   }
 
   return (
-    <div className='container mx-auto p-4 pt-10'>
+    <motion.div
+      className='container mx-auto p-4 pt-10'
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, x: -30 }}
+      transition={{ duration: 0.5 }}>
       {/* 1 */}
       <Previous text='영수증 인증' />
       {/* 2 */}
@@ -149,7 +155,7 @@ const ReviewPage = () => {
         <div className='flex items-start space-x-4 w-full'>
           <label
             htmlFor='image-upload'
-            className='flex flex-col items-center border border-gray-500 py-4 px-6 rounded-md cursor-pointer w-28 flex-shrink-0 cursor-pointer'>
+            className='flex flex-col items-center border border-gray-500 py-4 px-6 rounded-md w-28 shrink-0 cursor-pointer'>
             <input
               type='file'
               id='image-upload'
@@ -211,7 +217,7 @@ const ReviewPage = () => {
           </label>
 
           {/* 이미지 미리보기 부분 임시 구조 */}
-          <div className='flex-grow h-28 overflow-x-auto h-full flex gap-3 pb-2'>
+          <div className='grow h-28 overflow-x-auto h-full flex gap-3 pb-2'>
             {images.map((image, idx) => (
               <div
                 key={idx}
@@ -273,7 +279,7 @@ const ReviewPage = () => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }
 

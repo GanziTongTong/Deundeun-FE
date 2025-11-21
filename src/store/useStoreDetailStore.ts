@@ -4,6 +4,8 @@ interface SelectedStoreInfo {
   storeId: number
   distance: number
   categories: string[]
+  phoneNumber: string | null
+  openingHours: string | null
 }
 
 interface StoreDetailState {
