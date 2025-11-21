@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Previous from '../components/Previous'
 import StoreCard from '../components/Storecard'
 import { storeApi } from '../services/api'
+import { useStoreDetailStore } from '../store/useStoreDetailStore'
 import type { Store } from '../types/store'
 import search from '../assets/search.svg'
 import SpoonLoader from '../components/SpoonLoader'
@@ -14,6 +15,7 @@ const ITEMS_PER_PAGE = 5
 
 const SearchPage = () => {
   const navigate = useNavigate()
+  const { setSelectedStore } = useStoreDetailStore()
   const [searchParams, setSearchParams] = useSearchParams()
   const keyword = searchParams.get('keyword') || ''
 
@@ -193,7 +195,10 @@ const SearchPage = () => {
                 <div
                   key={store.storeId}
                   className='cursor-pointer'
-                  onClick={() => navigate(`/detail?storeId=${store.storeId}&distance=${store.distance}`)}>
+                  onClick={() => {
+                    setSelectedStore({ storeId: store.storeId, distance: store.distance, categories: store.categories })
+                    navigate('/detail')
+                  }}>
                   <StoreCard
                     name={store.name}
                     address={store.address}

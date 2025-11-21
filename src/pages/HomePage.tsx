@@ -11,6 +11,7 @@ import Checkbox from '../components/Checkbox'
 import StoreCard from '../components/Storecard'
 import { useLocationStore } from '../store/useLocationStore'
 import { useCategoryStore } from '../store/useCategoryStore'
+import { useStoreDetailStore } from '../store/useStoreDetailStore'
 import { storeApi } from '../services/api'
 import type { Store } from '../types/store'
 
@@ -52,8 +53,9 @@ const HomePage = () => {
   // Store hooks
   const { selectedDistrict } = useLocationStore()
   const { selectedCategories, toggleCategory, hasCategory, toggleAll, isAllSelected } = useCategoryStore()
+  const { setSelectedStore } = useStoreDetailStore()
 
-  // Kakao Maps SDK 동적 로드 (clusterer 라이브러리 포함)
+  // Kakao Maps SDK 동적 로드 (clusterer 라이브러리)
   useEffect(() => {
     const script = document.createElement('script')
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_MAP_API_KEY}&autoload=false&libraries=clusterer`
@@ -432,7 +434,10 @@ const HomePage = () => {
               <div
                 key={store.storeId}
                 className='cursor-pointer'
-                onClick={() => navigate(`/detail?storeId=${store.storeId}&distance=${store.distance}`)}>
+                onClick={() => {
+                  setSelectedStore({ storeId: store.storeId, distance: store.distance, categories: store.categories })
+                  navigate('/detail')
+                }}>
                 <StoreCard
                   name={store.name}
                   address={store.address}

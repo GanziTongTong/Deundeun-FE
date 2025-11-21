@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { storeApi } from '../services/api'
 import type { StoreDetail } from '../types/store'
+import { useStoreDetailStore } from '../store/useStoreDetailStore'
 import Previous from '../components/Previous'
 import spoonIcon from '../assets/spoon.svg'
 import clockIcon from '../assets/clock_icon.png'
@@ -12,9 +13,10 @@ import SpoonLoader from '../components/SpoonLoader'
 
 const DetailPage = () => {
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
-  const storeId = searchParams.get('storeId')
-  const distanceParam = searchParams.get('distance')
+  const { selectedStore } = useStoreDetailStore()
+  const storeId = selectedStore?.storeId.toString()
+  const distanceParam = selectedStore?.distance
+  const storeCategories = selectedStore?.categories || []
   const [storeDetail, setStoreDetail] = useState<StoreDetail | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
@@ -104,8 +106,8 @@ const DetailPage = () => {
   // 모든 이미지 수집
   const allImages = storeDetail.reviews.flatMap((review) => review.images.map((img) => img.imageUrl))
 
-  // 거리 표시 (query parameter에서 가져옴)
-  const distance = distanceParam ? `${(parseFloat(distanceParam) * 1000).toFixed(0)}m` : '정보 없음'
+  // 거리 표시 (state에서 가져옴)
+  const distance = distanceParam ? `${(distanceParam * 1000).toFixed(0)}m` : '정보 없음'
 
   return (
     <motion.div
@@ -189,11 +191,17 @@ const DetailPage = () => {
 
           {/* 카테고리 태그 */}
           <div className='flex flex-wrap gap-2 mt-6'>
-            <span className='bg-[#FFF4DF] text-[#FF6B35] text-xs py-1.5 px-3 rounded-lg'>{getCategoryLabel(storeDetail.category)}</span>
+            {storeCategories.map((category, index) => (
+              <span
+                key={index}
+                className='bg-[#FFF4DF] text-[#FF6B35] text-xs py-1.5 px-3 rounded-lg'>
+                {getCategoryLabel(category)}
+              </span>
+            ))}
           </div>
 
           {/* 영수증 리뷰 후기 섹션 */}
-          <div className='mt-8 p-6 bg-gray-50 rounded-lg'>
+          <div className='mt-8 p-6 rounded-lg'>
             <h2 className='text-lg font-bold mb-2'>영수증 리뷰 후기</h2>
             <p className='text-sm text-gray-600 mb-4'>방문한 유저들이 영수증을 인증한 날짜 후기에요</p>
 
