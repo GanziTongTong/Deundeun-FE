@@ -56,17 +56,23 @@ export const storeApi = {
     })
     return response.data.stores
   },
-  //https://deundeun.duckdns.org/api/reviews 가게 리뷰 등록
-  //   {
-  // 	"storeId": 1,
-  // 	"keyword": [1, 2, 3],
-  // 	"imgUrl": // Form 데이터 형식
-  // }
-  postStoreReview: async (storeId: string, keyword: number, imgUrl: FormData): Promise<void> => {
-    await apiClient.post('/reviews', {
-      storeId,
-      keyword,
-      imgUrl,
+  // 가게 리뷰 등록
+  postStoreReview: async (storeId: number, keywords: string[], images: File[]): Promise<void> => {
+    const formData = new FormData()
+
+    // request를 JSON 문자열로 추가
+    const requestData = { keywords }
+    formData.append('request', new Blob([JSON.stringify(requestData)], { type: 'application/json' }))
+
+    // 이미지 파일들 추가
+    images.forEach((image) => {
+      formData.append('images', image)
+    })
+
+    await apiClient.post(`/reviews?storeId=${storeId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     })
   },
 }
