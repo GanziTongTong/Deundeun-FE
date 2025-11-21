@@ -15,13 +15,15 @@ import { useStoreDetailStore } from '../store/useStoreDetailStore'
 import { storeApi } from '../services/api'
 import type { Store } from '../types/store'
 
-// 상수 정의
+/**
+ * =============================
+ * Map / Clustering Configuration
+ * =============================
+ */
 const DEFAULT_MAP_LEVEL = 5
 const CLUSTER_MIN_LEVEL = 4
 const SDK_CHECK_INTERVAL = 100
-
-// 카카오맵 레벨별 반경(km) 매핑
-const LEVEL_RADIUS_MAP: { [key: number]: number } = {
+const LEVEL_RADIUS_MAP: Record<number, number> = {
   1: 0.08,
   2: 0.1,
   3: 0.2,
@@ -32,6 +34,36 @@ const LEVEL_RADIUS_MAP: { [key: number]: number } = {
   8: 2,
   9: 4,
   10: 8,
+}
+
+/**
+ * 지도 레벨에서 탐색 반경(km) 계산 (fallback 0.5km)
+ */
+const getRadiusFromLevel = (level: number) => LEVEL_RADIUS_MAP[level] ?? 0.5
+
+/** Kakao SDK 로드 스크립트 추가 */
+const appendKakaoSdk = (appKey: string) => {
+  const script = document.createElement('script')
+  script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&autoload=false&libraries=clusterer`
+  script.async = true
+  document.head.appendChild(script)
+  return script
+}
+
+/** 커스텀 오버레이 DOM 생성 */
+const createOverlayContent = (storeName: string) => {
+  const wrapper = document.createElement('div')
+  wrapper.className = 'custom-marker'
+  wrapper.innerHTML = `
+    <div style="position:relative;background:#fff;border-radius:20px;padding:4px 12px;font-size:13px;font-weight:bold;color:#FF6B35;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;transition:all .2s;">
+      <div style="display:flex;align-items:center;gap:1px;">
+        <span style="font-size:16px;"></span>
+        <span>${storeName}</span>
+      </div>
+      <div style="position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid #fff;"></div>
+    </div>
+  `
+  return wrapper
 }
 
 const HomePage = () => {
@@ -90,247 +122,146 @@ const HomePage = () => {
     )
   }, [])
 
-  // 검색 핸들러
+  /** 검색바 엔터 처리 */
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && searchKeyword.trim()) {
-      navigate(`/search?keyword=${encodeURIComponent(searchKeyword.trim())}`)
-    }
+    if (e.key !== 'Enter') return
+    const keyword = searchKeyword.trim()
+    if (!keyword) return
+    navigate(`/search?keyword=${encodeURIComponent(keyword)}`)
   }
 
-  // 지도 레벨에서 반경(km) 계산
-  const getRadiusFromLevel = (level: number): number => {
-    return LEVEL_RADIUS_MAP[level] || 0.5
-  }
-
-  // API에서 가게 데이터 가져오기
+  /** 선택된 카테고리에 대해 반경 내 가게 데이터 로드 */
   const fetchStores = useCallback(
     async (lat: number, lng: number, level: number) => {
       const radiusKm = getRadiusFromLevel(level)
-
       try {
-        const promises = selectedCategories.map((category) =>
-          storeApi.getNearbyStores({
-            user_latitude: lat,
-            user_longitude: lng,
-            radiusKm,
-            category,
-          })
-        )
-
-        const results = await Promise.all(promises)
-        const allStores = results.flat()
-        const uniqueStores = Array.from(new Map(allStores.map((store) => [store.storeId, store])).values())
-
-        return uniqueStores
-      } catch (error) {
-        console.error('가게 데이터 로드 실패:', error)
+        const categoryRequests = selectedCategories.map((category) => storeApi.getNearbyStores({ user_latitude: lat, user_longitude: lng, radiusKm, category }))
+        const results = await Promise.all(categoryRequests)
+        // storeId 기준 중복 제거
+        return Array.from(new Map(results.flat().map((s) => [s.storeId, s])).values())
+      } catch (err) {
+        console.error('가게 데이터 로드 실패:', err)
         return []
       }
     },
     [selectedCategories]
   )
 
-  // 마커 생성 및 클러스터링 표시
+  /** 마커 / 오버레이 / 클러스터 표시 */
   const displayMarkers = useCallback((map: kakao.maps.Map, stores: Store[]) => {
-    // 기존 클러스터러 및 마커 제거
-    if (clustererRef.current) {
-      clustererRef.current.clear()
-    }
-    markersRef.current.forEach((marker) => marker.setMap(null))
-    overlaysRef.current.forEach((overlay) => overlay.setMap(null))
+    // 정리
+    if (clustererRef.current) clustererRef.current.clear()
+    markersRef.current.forEach((m) => m.setMap(null))
+    overlaysRef.current.forEach((o) => o.setMap(null))
     markersRef.current = []
     overlaysRef.current = []
 
-    // 마커 생성
     const markers = stores.map((store) => {
       const position = new window.kakao.maps.LatLng(store.latitude, store.longitude)
+      const content = createOverlayContent(store.name)
 
-      // 커스텀 오버레이 HTML 생성
-      const content = document.createElement('div')
-      content.className = 'custom-marker'
-      content.innerHTML = `
-        <div style="
-          position: relative;
-          background: white;
-          border-radius: 20px;
-          padding: 4px 12px;
-          font-size: 13px;
-          font-weight: bold;
-          color: #FF6B35;
-          white-space: nowrap;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-          cursor: pointer;
-          transition: all 0.2s;
-        ">
-          <div style="display: flex; align-items: center; gap: 1px;">
-            <span style="font-size: 16px;"></span>
-            <span>${store.name}</span>
-          </div>
-          <div style="
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 8px solid #fff;
-          "></div>
-        </div>
-      `
-
-      // 호버 효과
+      // Hover 효과
       content.onmouseenter = () => {
         content.style.transform = 'scale(1.05)'
-        //background 변경
       }
       content.onmouseleave = () => {
         content.style.transform = 'scale(1)'
         content.style.zIndex = '1'
       }
 
-      // 커스텀 오버레이 생성
-      const customOverlay = new window.kakao.maps.CustomOverlay({
-        position: position,
-        content: content,
-        yAnchor: 1.3,
-      })
+      // Overlay 생성
+      const customOverlay = new window.kakao.maps.CustomOverlay({ position, content, yAnchor: 1.3 })
+      overlaysRef.current.push(customOverlay)
 
-      // 클릭 이벤트
+      // 클릭 시 동일 좌표 가게 그룹 선택 + 스크롤 이동
       content.onclick = () => {
-        // 같은 위치에 있는 모든 가게 찾기
-        const storesAtSameLocation = stores.filter((s) => s.latitude === store.latitude && s.longitude === store.longitude)
-        setSelectedStores(storesAtSameLocation)
+        const sameLocationStores = stores.filter((s) => s.latitude === store.latitude && s.longitude === store.longitude)
+        setSelectedStores(sameLocationStores)
         map.setCenter(position)
-
-        // 가게 정보로 부드럽게 스크롤
         setTimeout(() => {
-          selectedStoresRef.current?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-          })
+          selectedStoresRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
         }, 100)
       }
 
-      overlaysRef.current.push(customOverlay)
-
-      // 클러스터링을 위한 기본 마커도 생성 (투명하게)
+      // 클러스터러를 위한 투명 마커 (표시용)
       const marker = new window.kakao.maps.Marker({
         position,
         title: store.name,
         image: new window.kakao.maps.MarkerImage('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==', new window.kakao.maps.Size(1, 1)),
         zIndex: -1,
       })
-
       markersRef.current.push(marker)
       return marker
     })
 
-    // 클러스터러 적용
+    // 클러스터러 지원 시 적용
     if (window.kakao?.maps?.MarkerClusterer) {
-      console.log('✅ 클러스터러 생성:', markers.length, '개 마커, minLevel:', CLUSTER_MIN_LEVEL)
       const clusterer = new window.kakao.maps.MarkerClusterer({
-        map: map,
+        map,
         averageCenter: true,
         minLevel: CLUSTER_MIN_LEVEL,
         disableClickZoom: true,
       })
-
       clusterer.addMarkers(markers)
       clustererRef.current = clusterer
-      console.log('✅ 클러스터러에 마커 추가 완료, 현재 지도 레벨:', map.getLevel())
 
-      // 지도 레벨에 따라 오버레이 표시/숨김
       const currentLevel = map.getLevel()
-      if (currentLevel < CLUSTER_MIN_LEVEL) {
-        // 확대되어 있으면 커스텀 오버레이 표시
-        overlaysRef.current.forEach((overlay) => overlay.setMap(map))
-      } else {
-        // 축소되어 있으면 커스텀 오버레이 숨김 (클러스터만 표시)
-        overlaysRef.current.forEach((overlay) => overlay.setMap(null))
-      }
+      const showOverlays = currentLevel < CLUSTER_MIN_LEVEL
+      overlaysRef.current.forEach((overlay) => overlay.setMap(showOverlays ? map : null))
 
-      // 클러스터 클릭 시 1레벨 확대
       window.kakao.maps.event.addListener(clusterer, 'clusterclick', (cluster: kakao.maps.Cluster) => {
-        const currentLevel = map.getLevel()
-        console.log('🔍 클러스터 클릭, 현재 레벨:', currentLevel, '→', currentLevel - 1)
-        map.setLevel(currentLevel - 1, { anchor: cluster.getCenter() })
+        const lvl = map.getLevel()
+        map.setLevel(lvl - 1, { anchor: cluster.getCenter() })
       })
-    } else {
-      console.warn('⚠️ MarkerClusterer를 사용할 수 없습니다. 개별 마커 표시')
-      // 클러스터러 미지원 시 개별 마커 표시
-      markers.forEach((marker) => marker.setMap(map))
-      overlaysRef.current.forEach((overlay) => overlay.setMap(map))
+      return
     }
+
+    // 클러스터러 미지원 → 개별 마커 및 오버레이 표시
+    markers.forEach((m) => m.setMap(map))
+    overlaysRef.current.forEach((o) => o.setMap(map))
   }, [])
 
-  // 지도 초기화 및 이벤트 설정
+  /** 지도 초기화 및 이벤트 바인딩 */
   useEffect(() => {
-    const location = selectedDistrict || { lat: 37.2596, lng: 127.0464 }
+    const center = selectedDistrict || { lat: 37.2596, lng: 127.0464 }
 
-    const initializeMap = async () => {
-      if (!window.kakao?.maps) {
-        console.error('Kakao Maps SDK가 로드되지 않았습니다.')
-        return
-      }
+    const init = async () => {
+      if (!window.kakao?.maps || !mapContainer.current) return
 
       window.kakao.maps.load(async () => {
         if (!mapContainer.current) return
-
-        const options = {
-          center: new window.kakao.maps.LatLng(location.lat, location.lng),
+        const map = new window.kakao.maps.Map(mapContainer.current, {
+          center: new window.kakao.maps.LatLng(center.lat, center.lng),
           level: DEFAULT_MAP_LEVEL,
-        }
-
-        const map = new window.kakao.maps.Map(mapContainer.current, options)
+        })
         mapInstance.current = map
 
-        // 중심 위치 마커
-        new window.kakao.maps.Marker({
-          position: new window.kakao.maps.LatLng(location.lat, location.lng),
-          map: map,
-        })
+        new window.kakao.maps.Marker({ position: new window.kakao.maps.LatLng(center.lat, center.lng), map })
 
-        // 초기 가게 데이터 로드
-        const initialStores = await fetchStores(location.lat, location.lng, DEFAULT_MAP_LEVEL)
-        console.log('🏪 초기 가게 데이터:', initialStores.length, '개, 지도 레벨:', map.getLevel())
+        const initialStores = await fetchStores(center.lat, center.lng, DEFAULT_MAP_LEVEL)
         displayMarkers(map, initialStores)
 
-        // 줌 변경 이벤트
         window.kakao.maps.event.addListener(map, 'zoom_changed', async () => {
-          const level = map.getLevel()
-          const center = map.getCenter()
-          console.log('🔄 카카오 맵 줌 변경, 새 레벨:', level)
-
-          // 레벨에 따라 커스텀 오버레이 표시/숨김
-          if (level < CLUSTER_MIN_LEVEL) {
-            // 확대되어 있으면 커스텀 오버레이 표시
-            overlaysRef.current.forEach((overlay) => overlay.setMap(map))
-          } else {
-            // 축소되어 있으면 커스텀 오버레이 숨김
-            overlaysRef.current.forEach((overlay) => overlay.setMap(null))
-          }
-
-          const newStores = await fetchStores(center.getLat(), center.getLng(), level)
+          const lvl = map.getLevel()
+          const c = map.getCenter()
+          const newStores = await fetchStores(c.getLat(), c.getLng(), lvl)
           displayMarkers(map, newStores)
         })
       })
     }
 
-    // SDK 로드 확인 및 초기화
     if (window.kakao?.maps) {
-      initializeMap()
-    } else {
-      const checkInterval = setInterval(() => {
-        if (window.kakao?.maps) {
-          clearInterval(checkInterval)
-          initializeMap()
-        }
-      }, SDK_CHECK_INTERVAL)
-
-      return () => clearInterval(checkInterval)
+      init()
+      return
     }
+
+    const interval = setInterval(() => {
+      if (window.kakao?.maps) {
+        clearInterval(interval)
+        init()
+      }
+    }, SDK_CHECK_INTERVAL)
+    return () => clearInterval(interval)
   }, [selectedDistrict, selectedCategories, fetchStores, displayMarkers])
 
   return (
@@ -341,7 +272,7 @@ const HomePage = () => {
       exit={{ opacity: 0, x: -30 }}
       transition={{ duration: 0.5 }}>
       {/* 헤더 영역 */}
-      <header className='bg-white shadow-sm px-4 py-8 shrink-0'>
+      <header className='bg-white px-4 py-8 shrink-0'>
         <div className='flex justify-between items-center'>
           <button
             className='text-2xl font-bold flex items-center cursor-pointer'
@@ -377,7 +308,9 @@ const HomePage = () => {
             onKeyDown={handleSearch}
           />
         </div>
+        
       </header>
+      <div className='bg-[#F5F5F5] h-2 my-2'></div>
 
       {/* 메인 컨텐츠 */}
       <main className='p-5 flex-1'>
@@ -411,7 +344,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* map */}
+        {/* 지도 영역 */}
         <div className='h-[40vh]'>
           <div className='h-full '>
             <div

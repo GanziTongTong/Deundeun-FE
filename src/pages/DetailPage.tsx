@@ -115,11 +115,11 @@ const DetailPage = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}>
-      <div className='container mx-auto p-4 pt-10 pb-20'>
+      <div className='container mx-auto pt-10 pb-20'>
         <Previous text='가게 정보' />
 
         {/* 가게 이름 */}
-        <div className='mt-6'>
+        <div className='mt-6 p-4'>
           <div className='flex items-center gap-2 mb-4'>
             <img
               src={spoonIcon}
@@ -200,6 +200,8 @@ const DetailPage = () => {
             ))}
           </div>
 
+          <div className='bg-[#F5F5F5] h-2 my-6 -mx-4' />
+
           {/* 영수증 리뷰 후기 섹션 */}
           <div className='mt-8 p-6 rounded-lg'>
             <h2 className='text-lg font-bold mb-2'>영수증 리뷰 후기</h2>
@@ -257,7 +259,7 @@ const DetailPage = () => {
       {/* 이미지 모달 */}
       {selectedImage && (
         <div
-          className='fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4'
+          className='fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4'
           onClick={() => setSelectedImage(null)}>
           <div className='relative max-w-4xl w-full'>
             <button
