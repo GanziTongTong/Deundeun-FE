@@ -41,15 +41,6 @@ const LEVEL_RADIUS_MAP: Record<number, number> = {
  */
 const getRadiusFromLevel = (level: number) => LEVEL_RADIUS_MAP[level] ?? 0.5
 
-/** Kakao SDK 로드 스크립트 추가 */
-const appendKakaoSdk = (appKey: string) => {
-  const script = document.createElement('script')
-  script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&autoload=false&libraries=clusterer`
-  script.async = true
-  document.head.appendChild(script)
-  return script
-}
-
 /** 커스텀 오버레이 DOM 생성 */
 const createOverlayContent = (storeName: string) => {
   const wrapper = document.createElement('div')
@@ -308,7 +299,6 @@ const HomePage = () => {
             onKeyDown={handleSearch}
           />
         </div>
-        
       </header>
       <div className='bg-[#F5F5F5] h-2 my-2'></div>
 
@@ -368,14 +358,21 @@ const HomePage = () => {
                 key={store.storeId}
                 className='cursor-pointer'
                 onClick={() => {
-                  setSelectedStore({ storeId: store.storeId, distance: store.distance, categories: store.categories })
+                  setSelectedStore({
+                    storeId: store.storeId,
+                    distance: store.distance,
+                    categories: store.categories,
+                    phoneNumber: store.phoneNumber,
+                    openingHours: store.openingHours,
+                  })
                   navigate('/detail')
                 }}>
                 <StoreCard
                   name={store.name}
                   address={store.address}
                   category={store.categories}
-                  foodType='한식'
+                  phoneNumber={store.phoneNumber}
+                  openingHours={store.openingHours}
                   distance={`${(store.distance * 1000).toFixed(0)}m`}
                 />
               </div>

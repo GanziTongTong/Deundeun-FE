@@ -52,7 +52,7 @@ export const storeApi = {
     const response = await apiClient.post<{ stores: Store[] }>(`/store/search?keyword=${encodeURIComponent(keyword)}`, {
       user_latitude: position.coords.latitude,
       user_longitude: position.coords.longitude,
-      radiusKm: 5,
+      radiusKm: 10,
     })
     return response.data.stores
   },

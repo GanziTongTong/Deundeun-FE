@@ -121,9 +121,10 @@ const SearchPage = () => {
   return (
     <motion.div
       className='min-h-screen bg-white'
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}>
+      exit={{ opacity: 0, x: -30 }}
+      transition={{ duration: 0.5 }}>
       <div className='container mx-auto p-4 pt-10 pb-20'>
         <Previous
           text='검색 결과'
@@ -196,14 +197,21 @@ const SearchPage = () => {
                   key={store.storeId}
                   className='cursor-pointer'
                   onClick={() => {
-                    setSelectedStore({ storeId: store.storeId, distance: store.distance, categories: store.categories })
+                    setSelectedStore({
+                      storeId: store.storeId,
+                      distance: store.distance,
+                      categories: store.categories,
+                      phoneNumber: store.phoneNumber,
+                      openingHours: store.openingHours,
+                    })
                     navigate('/detail')
                   }}>
                   <StoreCard
                     name={store.name}
                     address={store.address}
                     category={store.categories}
-                    foodType=''
+                    phoneNumber={store.phoneNumber}
+                    openingHours={store.openingHours}
                     distance={`${(store.distance * 1000).toFixed(0)}m`}
                   />
                 </div>

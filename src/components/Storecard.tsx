@@ -4,7 +4,8 @@ interface StoreCardProps {
   name: string
   address: string
   category: string[]
-  foodType: string
+  phoneNumber: string | null
+  openingHours: string | null
   distance: string
 }
 
@@ -14,7 +15,7 @@ const categoryLabels: Record<string, string> = {
   GOOD_NEIGHBOR_STORE: '좋은이웃가게',
 }
 
-export default function StoreCard({  name, address, category, foodType, distance }: StoreCardProps) {
+export default function StoreCard({ name, address, category, phoneNumber, openingHours = '09:00 - 18:00', distance }: StoreCardProps) {
   return (
     <div className='bg-white px-4 py-3 min-w-[280px] rounded-2xl shadow-[0px_0px_4px_0px_rgba(0,0,0,0.15)] '>
       {/* 헤더 - 랭킹과 아이콘 */}
@@ -37,10 +38,19 @@ export default function StoreCard({  name, address, category, foodType, distance
         <div className='text-sm text-[#AAA] font-bold ml-2 whitespace-nowrap cursor-none'>{distance}</div>
       </div>
 
-      {/* 음식 타입 */}
-      <p className='text-sm mb-3 text-[#AAA]'>
-        제공 음식 <span className='text-[#222]'>{foodType}</span>
-      </p>
+      {/* 전화번호 */}
+      {phoneNumber && (
+        <p className='text-sm mb-2 text-[#AAA]'>
+          전화번호 <span className='text-[#222]'>{phoneNumber}</span>
+        </p>
+      )}
+
+      {/* 운영시간 */}
+      {openingHours && (
+        <p className='text-sm mb-3 text-[#AAA]'>
+          운영시간 <span className='text-[#222]'>{openingHours}</span>
+        </p>
+      )}
 
       {/* 카테고리 태그들 */}
       <div className='flex flex-wrap gap-2'>
