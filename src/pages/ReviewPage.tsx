@@ -4,14 +4,32 @@ import { motion } from 'framer-motion'
 import Previous from '../components/Previous'
 import Information from '../components/Information'
 
+interface StoreDetail {
+  storeId: number
+  name: string
+  category: string
+  operatingTime: string
+  mainItems: string
+}
+
 const ReviewPage = () => {
   const [images, setImages] = useState<File[]>([])
   const [alertImageMessage, setAlertImageMessage] = useState('')
   const [selectedButtons, setSelectedButtons] = useState<string[]>([])
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
+  const [store, setStore] = useState<StoreDetail | null>(null)
 
   const navigate = useNavigate()
+  
+  const keywordMap: { [key: string]: number } = {
+    '맛있었어요': 1,
+    '혼밥하기 좋아요': 2,
+    '양이 많아요': 3,
+    '사장님이 반겨주셨어요': 4,
+    '서비스가 친절해요': 5,
+    '재료가 신선해요': 6
+  }
 
   //사진 등록
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,18 +63,43 @@ const ReviewPage = () => {
       }
     }
   }
-
   //팝업
   const handleReviewSubmit = () => {
+    if (!store) return alert('가게 정보가 없습니다.')
     setIsPopupOpen(true)
   }
   const handlePopupConfirm = () => {
     setIsPopupOpen(false)
-    alert('리뷰가 등록되었습니다!')
-    navigate('/home')
+    submitReview()
   }
   const handlePopupCancel = () => {
     setIsPopupOpen(false)
+  }
+  //API연결
+  const submitReview = async () => {
+    if (!store) return alert('가게 정보가 없습니다.')
+
+    try {
+      const selectedKeywordIds = selectedButtons.map(btn => keywordMap[btn])
+
+      const formData = new FormData()
+      formData.append('storeId', String(store.storeId))
+      selectedKeywordIds.forEach(id => formData.append('keyword', String(id)))
+      images.forEach((image) => formData.append('imgUrl', image))
+
+      const res = await fetch('http://localhost:8080/api/reviews', {
+        method: 'POST',
+        body: formData
+      })
+
+      if (!res.ok) throw new Error('리뷰 등록 실패')
+
+      alert('리뷰가 등록되었습니다!')
+      navigate('/home')
+    } catch (err) {
+      console.error(err)
+      alert('리뷰 등록 중 오류가 발생했습니다.')
+    }
   }
 
   return (
