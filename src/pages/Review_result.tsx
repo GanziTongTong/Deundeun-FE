@@ -18,16 +18,16 @@ const Review_result = () => {
   return (
     <div className='container mx-auto p-4 pt-10'>
       {/* 1 */}
-      <Previous />
+      <Previous text='영수증 인증'/>
       {/* 2 */}
       {isUploadSuccess ? (
         // 업로드 성공 화면
         <div className='flex flex-col justify-between py-40'>
           <div className='flex flex-col items-center justify-center pt-16'>
-            <div className='relative w-28 h-28'>
+            <div className='relative w-27 h-27'>
               <svg
-                width='102'
-                height='102'
+                width='96'
+                height='96'
                 viewBox='0 0 72 72'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
@@ -41,12 +41,12 @@ const Review_result = () => {
                 />
               </svg>
               <svg
-                width='48'
-                height='36'
+                width='42'
+                height='30'
                 viewBox='0 0 35 25'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
-                className='absolute top-8 left-7 z-20'>
+                className='absolute top-8.5 left-7 z-20'>
                 <path
                   d='M2.5 12.5L12.5 22.5L32.5 2.5'
                   stroke='#FFFFFF'
@@ -56,11 +56,11 @@ const Review_result = () => {
                 />
               </svg>
             </div>
-            <p className='text-xl pb-16'>영수증 인증 완료!</p>
+            <p className='text-xl pb-16 '>영수증 인증 완료!</p>
           </div>
-          <div className='flex justify-center pt-60'>
+          <div className='flex justify-center pt-57'>
             <button
-              className='w-[430px] h-[50px] bg-[#FC7E2A] rounded-md p-2 text-white text-center'
+              className='w-[430px] h-[50px] bg-[#FC7E2A] rounded-md p-2 text-white text-center font-semibold'
               onClick={handleNext}>
               리뷰 작성하기
             </button>
@@ -70,10 +70,10 @@ const Review_result = () => {
         // 업로드 실패 화면
         <div className='flex flex-col justify-between py-40'>
           <div className='flex flex-col items-center justify-center pt-16'>
-            <div className='relative w-28 h-28'>
+            <div className='relative w-27 h-27'>
               <svg
-                width='102'
-                height='102'
+                width='96'
+                height='96'
                 viewBox='0 0 70 70'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'>
@@ -85,12 +85,12 @@ const Review_result = () => {
                 />
               </svg>
               <svg
-                width='48'
-                height='48'
+                width='36'
+                height='36'
                 viewBox='0 0 21 21'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
-                className='absolute top-8 left-7 z-20'>
+                className='absolute top-7.5 left-7.5 z-20'>
                 <path
                   d='M18.6667 2L2 18.6667L18.6667 2ZM2 2L18.6667 18.6667L2 2Z'
                   fill='#ffffff'
@@ -103,12 +103,12 @@ const Review_result = () => {
                 />
               </svg>
             </div>
-            <p className='text-xl'>영수증 인증 실패</p>
-            <p className='pb-16'>상호명과 결제카드를 확인해주세요.</p>
+            <p className='text-xl font-bold'>영수증 인증 실패</p>
+            <p className='pb-16 text-s text-[#444444]'>상호명과 결제카드를 확인해주세요.</p>
           </div>
-          <div className='flex justify-center pt-60'>
+          <div className='flex justify-center pt-57'>
             <button
-              className='w-[430px] h-[50px] bg-[#FC7E2A] rounded-md p-2 text-white text-center'
+              className='w-[430px] h-[50px] bg-[#FC7E2A] rounded-md p-2 text-white text-center text-semibold'
               onClick={handleBack}>
               다시 인증하기
             </button>
