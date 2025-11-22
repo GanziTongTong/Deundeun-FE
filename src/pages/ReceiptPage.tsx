@@ -73,11 +73,7 @@ const ReceiptPage = () => {
         {/* 카드 결제 버튼 */}
         <button
           className='cursor-pointer flex flex-col items-center justify-center p-4 rounded-md border-3 border-gray-300
-<<<<<<< HEAD
-          w-[150px] sm:w-[180px] md:w-[200px]
-=======
           w-[180px] md:w-[200px]
->>>>>>> 369c20708f72063a7f8e1f485110b47157d4fd1e
           hover:border-[#FC7E2A] transition-colors duration-300'>
           <svg
             width='30'
@@ -109,11 +105,7 @@ const ReceiptPage = () => {
         />
         <button
           className='cursor-pointer group flex flex-col items-center justify-center p-4 rounded-md border-3 border-gray-300
-<<<<<<< HEAD
-          w-[150px] sm:w-[180px] md:w-[200px]
-=======
           w-[180px] md:w-[200px]
->>>>>>> 369c20708f72063a7f8e1f485110b47157d4fd1e
           hover:border-[#FC7E2A] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
           onClick={handleButtonClick}
           disabled={isUploading}>
