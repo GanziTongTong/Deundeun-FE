@@ -118,19 +118,19 @@ const ReviewPage = () => {
               <button
                 key={text}
                 onClick={() => handleButtonClick(text)}
-                className={`border px-4 py-2.5 rounded-md text-center text-sm cursor-pointer sm:text-s
+                className={`border px-3 py-2.5 rounded-md text-center text-sm cursor-pointer sm:text-s
                 ${selectedButtons.includes(text) ? 'border-[#FC7E2A] text-[#FC7E2A] bg-white font-semibold' : 'bg-gray-100 border-gray-200 font-semibold'}`}>
                 {text}
               </button>
             ))}
           </div>
           {/* 두 번째 줄 (2열) */}
-          <div className='grid grid-cols-3 gap-3 gap-y-4 text-[#444444] text-s'>
+          <div className='grid grid-cols-3 gap-3 gap-y-4 text-[#444444] text-s  text-center'>
             {['사장님이 반겨주셨어요', '서비스가 친절해요', '재료가 신선해요'].map((text) => (
               <button
                 key={text}
                 onClick={() => handleButtonClick(text)}
-                className={`border px-4 py-2.5 rounded-md text-center text-sm cursor-pointer sm:text-s
+                className={`border px-3 py-2.5 rounded-md text-center text-sm cursor-pointer sm:text-s whitespace-nowrap
                 ${selectedButtons.includes(text) ? 'border-[#FC7E2A] text-[#FC7E2A] bg-white font-semibold' : 'bg-gray-100 border-gray-200 font-semibold'}`}>
                 {text}
               </button>
