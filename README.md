@@ -65,7 +65,6 @@
 
 
 ---
-
 ## 💻 Stacks
 
 | 구분                 | 기술                                                                                                                                                                                                                  |
@@ -76,10 +75,8 @@
 | **Style**            | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)                                                                                                 |
 | **Animation**        | ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white) ![Swiper](https://img.shields.io/badge/Swiper-6332F6?style=flat-square&logo=swiper&logoColor=white) |
 | **State Management** | ![Zustand](https://img.shields.io/badge/Zustand-000000?style=flat-square)                                                                                                                                             |
-| **Map**              | ![Kakao Maps](https://img.shields.io/badge/Kakao_Maps-FFCD00?style=flat-square&logo=kakao&logoColor=black)
-
-| **AI/ML**            | ![Upstage](https://img.shields.io/badge/Upstage-6C47FF?style=flat-square&logo=upstage&logoColor=white)               |
-
+| **Map**              | ![Kakao Maps](https://img.shields.io/badge/Kakao_Maps-FFCD00?style=flat-square&logo=kakao&logoColor=black)                                                                                                            |
+| **AI/ML**            | ![Upstage](https://img.shields.io/badge/Upstage-6C47FF?style=flat-square&logo=upstage&logoColor=white)                                                                                                                |
 | **HTTP Client**      | ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=axios&logoColor=white)                                                                                                                      |
 | **Deployment**       | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)                                                                                                                   |
 
