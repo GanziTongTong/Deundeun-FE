@@ -1,73 +1,167 @@
-# React + TypeScript + Vite
+# [든든] 우리 동네 식당 리뷰 서비스
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<div align="center">
+<!-- TODO: 서비스 대표 이미지 추가 -->
+</div>
 
-Currently, two official plugins are available:
+# [든든] : WEB FRONTEND
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+> **든든팀의 우리 동네 식당 리뷰 및 영수증 인증 서비스에요.** <br/> **개발기간: 2024.11 ~ ing**
 
-## React Compiler
+## 👋 배포 주소
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+> **든든 Service URL** : [든든 경험하기](#) <br> > **프론트 Github** : [프론트 Github](https://github.com/GanziTongTong/Deundeun-FE)<br> > **백엔드 Github** : [백엔드 Github](#)<br>
 
-## Expanding the ESLint configuration
+## 🎉 팀 소개
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+|                  팀원1                  |                  팀원2                  |                  팀원3                  |                  팀원4                  |                  팀원5                  |
+| :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: | :-------------------------------------: |
+| <img width="160" alt="팀원1" src="#" /> | <img width="160" alt="팀원2" src="#" /> | <img width="160" alt="팀원3" src="#" /> | <img width="160" alt="팀원4" src="#" /> | <img width="160" alt="팀원5" src="#" /> |
+|      [@팀원1](https://github.com/)      |      [@팀원2](https://github.com/)      |      [@팀원3](https://github.com/)      |      [@팀원4](https://github.com/)      |      [@팀원5](https://github.com/)      |
+|                Frontend                 |                Frontend                 |                 Backend                 |                 Backend                 |                 Design                  |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🔥 프로젝트 소개
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+<mark>든든은 사용자가 영수증을 업로드하고 우리 동네 식당의 진솔한 리뷰를 공유하는 서비스에요. 실제 방문을 인증한 사용자만 리뷰를 작성할 수 있어 더 신뢰할 수 있는 정보를 제공해요. 카카오맵 API를 활용하여 내 주변 식당을 쉽게 찾고, 다른 사용자들의 솔직한 후기를 확인할 수 있어요.</mark>
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+<br>
+
+## 🌊 서비스 플로우
+
+<!-- TODO: 서비스 플로우 이미지 추가 -->
+<div align="center">
+</div>
+
+<br>
+
+## ✨ 서비스 핵심 기능
+
+### 1. 카카오맵 기반 식당 검색
+
+<!-- TODO: 지도 검색 기능 스크린샷 추가 -->
+
+<br>
+
+<mark>내 주변 식당을 카카오맵으로 손쉽게 찾아보세요. 클러스터링으로 많은 매장도 한눈에 확인할 수 있어요.</mark>
+
+### 2. 영수증 인증 및 리뷰 작성
+
+<!-- TODO: 영수증 업로드 및 리뷰 작성 스크린샷 추가 -->
+
+<br>
+
+<mark>영수증을 업로드하여 실제 방문을 인증하고, 키워드와 이미지를 포함한 리뷰를 작성하세요. 최대 5장의 사진으로 생생한 경험을 공유할 수 있어요.</mark>
+
+### 3. 카테고리별 식당 탐색
+
+<!-- TODO: 카테고리 필터 스크린샷 추가 -->
+
+<br>
+
+<mark>한식, 중식, 일식, 양식 등 다양한 카테고리로 원하는 음식점을 빠르게 찾을 수 있어요.</mark>
+
+### 4. 상세 정보 및 리뷰 확인
+
+<!-- TODO: 상세 페이지 스크린샷 추가 -->
+
+<br>
+
+<mark>식당의 전화번호, 영업시간, 주소 등 기본 정보와 함께 다른 사용자들의 생생한 리뷰를 확인하세요.</mark>
+
+---
+
+## 💻 Stacks
+
+| 구분                 | 기술                                                                                                                                                                                                                  |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Core**             | ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)      |
+| **Build Tool**       | ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)                                                                                                                         |
+| **Package Manager**  | ![Yarn](https://img.shields.io/badge/Yarn-2C8EBB?style=flat-square&logo=yarn&logoColor=white)                                                                                                                         |
+| **Style**            | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)                                                                                                 |
+| **Animation**        | ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white) ![Swiper](https://img.shields.io/badge/Swiper-6332F6?style=flat-square&logo=swiper&logoColor=white) |
+| **State Management** | ![Zustand](https://img.shields.io/badge/Zustand-000000?style=flat-square)                                                                                                                                             |
+| **Map**              | ![Kakao Maps](https://img.shields.io/badge/Kakao_Maps-FFCD00?style=flat-square&logo=kakao&logoColor=black)                                                                                                            |
+| **HTTP Client**      | ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=axios&logoColor=white)                                                                                                                      |
+| **Deployment**       | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)                                                                                                                   |
+
+## 🚀 설치 및 실행
+
+### 개발 환경 설정
+
+```bash
+# 저장소 클론
+git clone https://github.com/GanziTongTong/Deundeun-FE.git
+cd Deundeun-FE
+
+# 의존성 설치
+yarn install
+
+# 개발 서버 실행
+yarn dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 빌드 및 배포
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# 프로덕션 빌드
+yarn build
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 빌드 결과 미리보기
+yarn preview
+
+# 린터 실행
+yarn lint
 ```
+
+---
+
+## 📁 프로젝트 구조
+
+```
+src/
+├── components/        # 재사용 가능한 컴포넌트
+├── layouts/           # 레이아웃 컴포넌트
+├── pages/             # 페이지 컴포넌트
+├── router/            # 라우팅 설정
+├── services/          # API 서비스
+├── store/             # Zustand 상태 관리
+└── types/             # TypeScript 타입 정의
+```
+
+---
+
+## ✨ 주요 기능 상세
+
+### 🗺️ 카카오맵 통합
+
+- 실시간 위치 기반 식당 검색
+- 마커 클러스터링으로 효율적인 지도 표시
+- 카테고리별 필터링
+
+### 📸 영수증 인증
+
+- 이미지 업로드 및 미리보기
+- 영수증 검증 로딩 상태 표시
+- 검증 완료 후 리뷰 작성 연동
+
+### ⭐ 리뷰 시스템
+
+- 키워드 기반 리뷰 (맛있어요, 재료가 신선해요 등)
+- 최대 5장의 이미지 업로드
+- 실제 방문 인증된 리뷰만 표시
+
+### 🎨 반응형 디자인
+
+- 모바일/데스크톱 레이아웃 분리
+- Framer Motion 페이지 전환 애니메이션
+- Tailwind CSS 기반 일관된 디자인
+
+---
+
+## 🎯 향후 계획
+
+- [ ] 소셜 로그인 기능 추가
+- [ ] 마이페이지 및 내가 쓴 리뷰 관리
+- [ ] 식당 즐겨찾기 기능
+- [ ] 푸시 알림 시스템
+- [ ] 리뷰 좋아요/댓글 기능
