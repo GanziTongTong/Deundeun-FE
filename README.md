@@ -1,4 +1,4 @@
-# [든든] 모든 아이들이 든든하게 식사할 수 있도록
+# [DeunDeun] 모든 아이들이 든든하게 식사할 수 있도록
 
 <div align="center">
   <img width="1920" height="1080" alt="표지" src="https://github.com/user-attachments/assets/16fe646e-3723-4fe5-9ee9-bd0204758e2a" />
