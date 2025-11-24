@@ -1,8 +1,9 @@
-# [든든] 결식아동들을 위한 식당 찾기 플랫폼
+# [든든] 모든 아이들이 든든하게 식사할 수 있도록
 
 <div align="center">
   <img width="1920" height="1080" alt="표지" src="https://github.com/user-attachments/assets/16fe646e-3723-4fe5-9ee9-bd0204758e2a" />
 </div>
+
 
 # [든든] : WEB FRONTEND
 
@@ -10,17 +11,16 @@
 
 ## 👋 배포 주소
 
-> **든든 Service URL** : [든든 경험하기](https://deundeun.vercel.app/) <br> > **프론트 Github** : [프론트 Github](https://github.com/GanziTongTong/Deundeun-FE)<br> > **백엔드 Github** : [백엔드 Github](https://github.com/GanziTongTong/Deundeun-BE)<br> > **발표 자료** : [![PDF](https://img.shields.io/badge/PDF-간지톤_발표자료-red?style=flat-square&logo=adobe-acrobat-reader)](https://github.com/GanziTongTong/Deundeun-FE/raw/main/public/간지톤_든든_발표자료.pdf)
-
-<br>
+> **든든 Service URL** : [든든 경험하기](https://deundeun.vercel.app/) <br> > **프론트 Github** : [프론트 Github](https://github.com/GanziTongTong/Deundeun-FE)<br> > **백엔드 Github** : [백엔드 Github](https://github.com/GanziTongTong/Deundeun-BE)<br>
 
 ## 🎉 팀 소개
 
-|                                                         최진형                                                         |                                                        김소은                                                        |                                                         조규림                                                         |                                                         심호용                                                         |                  최서연                  |
-| :--------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------: |
-| <img width="160" alt="최진형" src="https://github.com/user-attachments/assets/9e0ee844-d700-47b3-8c27-ec861e4bf11a" /> | <img width="160" alt="소은" src="https://github.com/user-attachments/assets/82e65e71-131a-4220-9990-82e888f9f39e" /> | <img width="160" alt="조규림" src="https://github.com/user-attachments/assets/ba903748-2efa-431f-8963-d167b565de69" /> | <img width="160" alt="심호용" src="https://github.com/user-attachments/assets/1c9e25be-d25b-4029-855c-2d2c4e8988de" /> | <img width="160" alt="최서연" src="#" /> |
-|                                         [@최진형](https://github.com/Neogul02)                                         |                                         [@김소은](https://github.com/thdms1)                                         |                                         [@조규림](https://github.com/ckr8305)                                          |                                        [@심호용](https://github.com/shimhy0704)                                        |                  최서연                  |
-|                                                        Frontend                                                        |                                                       Frontend                                                       |                                                        Backend                                                         |                                                        Backend                                                         |                  Design                  |
+
+|                  최진형                  |                  김소은                  |                  조규림                  |                  심호용                  |                  최서연                  |
+| :--------------------------------------: | :--------------------------------------: | :--------------------------------------: | :--------------------------------------: | :--------------------------------------: |
+|  <img width="160" alt="최진형" src="https://github.com/user-attachments/assets/9e0ee844-d700-47b3-8c27-ec861e4bf11a" /> | <img width="160" alt="소은" src="https://github.com/user-attachments/assets/82e65e71-131a-4220-9990-82e888f9f39e" /> | <img width="160" alt="조규림" src="https://github.com/user-attachments/assets/ba903748-2efa-431f-8963-d167b565de69" /> | <img width="160" alt="심호용" src="https://github.com/user-attachments/assets/1c9e25be-d25b-4029-855c-2d2c4e8988de" /> | <img width="160" alt="최서연" src="#" /> |
+|  [@최진형](https://github.com/Neogul02)  |   [@김소은](https://github.com/thdms1)   |  [@조규림](https://github.com/ckr8305)   | [@심호용](https://github.com/shimhy0704) |                  최서연                  |
+|                 Frontend                 |                 Frontend                 |                 Backend                  |                 Backend                  |                  Design                  |
 
 ## 🔥 프로젝트 소개
 
@@ -29,15 +29,6 @@
 <br>
 
 ## 🌊 서비스 플로우
-
-<div align="center">
-  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-    <img src="https://github.com/user-attachments/assets/06981aa7-b9a8-4d53-82be-945476e233a3" width="48%" alt="서비스 플로우 3" />
-    <img src="https://github.com/user-attachments/assets/5b988c07-8f3b-40a8-8139-908617c07281" width="48%" alt="서비스 플로우 4" />
-  </div>
-</div>
-
-<br>
 
 ### 1. 우리집 근처 사용처 랭킹 TOP5와 카카오맵 연동 필터링
 
@@ -59,6 +50,7 @@
 
 <mark>식당의 전화번호, 영업시간, 주소 등 기본 정보와 함께 다른 사용자들의 생생한 리뷰를 확인하세요.</mark>
 
+
 ### 3. 아동급식카드 사용자들만의 영수증 인증 및 리뷰 후기 작성
 
 <div align="center">
@@ -68,6 +60,9 @@
 <br>
 
 <mark>영수증을 업로드하여 실제 방문을 인증하고, 키워드와 이미지를 포함한 리뷰를 작성하세요.</mark>
+
+
+
 
 ---
 
@@ -81,8 +76,10 @@
 | **Style**            | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)                                                                                                 |
 | **Animation**        | ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white) ![Swiper](https://img.shields.io/badge/Swiper-6332F6?style=flat-square&logo=swiper&logoColor=white) |
 | **State Management** | ![Zustand](https://img.shields.io/badge/Zustand-000000?style=flat-square)                                                                                                                                             |
-| **Map**              | ![Kakao Maps](https://img.shields.io/badge/Kakao_Maps-FFCD00?style=flat-square&logo=kakao&logoColor=black)                                                                                                            |
-| **AI/ML**            | ![Upstage](https://img.shields.io/badge/Upstage-6C47FF?style=flat-square&logo=upstage&logoColor=white)                                                                                                                |
+| **Map**              | ![Kakao Maps](https://img.shields.io/badge/Kakao_Maps-FFCD00?style=flat-square&logo=kakao&logoColor=black)
+
+| **AI/ML**            | ![Upstage](https://img.shields.io/badge/Upstage-6C47FF?style=flat-square&logo=upstage&logoColor=white)               |
+
 | **HTTP Client**      | ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=axios&logoColor=white)                                                                                                                      |
 | **Deployment**       | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)                                                                                                                   |
 
@@ -138,12 +135,10 @@ src/
 
 - 실시간 위치 기반 식당 검색
 - 마커 클러스터링으로 효율적인 지도 표시
-- 카테고리별 필터링
+- 아동급식카드, 좋은이웃가게, 카테고리별 필터링
 
-### 📸 영수증 인증 (Upstage AI 연동)
+### 📸 영수증 인증
 
-- Upstage Document Classification API를 통한 영수증 자동 분류
-- Upstage OCR API로 영수증 텍스트 추출 및 가게명 검증
 - 이미지 업로드 및 미리보기
 - 영수증 검증 로딩 상태 표시
 - 검증 완료 후 리뷰 작성 연동
@@ -164,16 +159,16 @@ src/
 
 ## ✍️ [DeunDeun] 우리팀: 간지통통의 이야기
 
-간지톤 본부에서 랜덤으로 배정된 우리팀, 몽쉘통통을 먹고있던 한 남자가 팀 이름으로 간지통통이라는 아재개그를 쳤는데 팀원들이 좋아해 간지통통이 되었어요.
+간지톤 본부에서 랜덤으로 배정된 우리팀, 몽쉘통통을 먹고있던 한 남자가 팀 이름으로 간지통통이라는 아재개그를 쳤는데 팀원들이 좋아해 간지통통이 되었어요. 
 
 ### 1. 멋쟁이사자처럼 멋쟁이사자처럼 12개 대학 연합해커톤, 간지톤에 참여 했어요.
 
-### 2. 멋쟁이사자처럼 대학 소속 연합 해커톤 🐴 干支 thon : MACHTHON에 참여해 16팀 중 3등, 우수상을 수상했어요.
 
-- [간지톤이 뭔가요?](<[https://fuchsia-prince-aea.notion.site/2025-2-23194f749d6180c58b78da7d23af448c](https://artistic-collision-d29.notion.site/2025-12-281954f3ed8b80d6ab96df86151070a4)>)
-- [간지톤 Instagram](<[https://www.instagram.com/p/DO-hQbPk_g8/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==](https://www.instagram.com/ganzi_thon/)>)
+### 2. 멋쟁이사자처럼 대학 소속 연합 해커톤 🐴 干支thon : MACHTHON에 참여해 16팀 중 3등, 우수상을 수상했어요.
+- [간지톤이 뭔가요?]([https://fuchsia-prince-aea.notion.site/2025-2-23194f749d6180c58b78da7d23af448c](https://artistic-collision-d29.notion.site/2025-12-281954f3ed8b80d6ab96df86151070a4))
+- [간지톤 Instagram]([https://www.instagram.com/p/DO-hQbPk_g8/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==](https://www.instagram.com/ganzi_thon/))
 
 <div align="center">
-<img width="2379" height="1343" alt="1 10" src="https://github.com/user-attachments/assets/16acd367-4572-49e3-bda8-f759750d7b9f" />
-<img width="2048" height="1152" alt="image 139" src="https://github.com/user-attachments/assets/5491fe8e-d6b3-4cca-8f63-9800ef02fdfd" />
-</div>
+
+</div>   
+
