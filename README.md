@@ -159,13 +159,14 @@ src/
 간지톤 본부에서 랜덤으로 배정된 우리팀, 몽쉘통통을 먹고있던 한 남자가 팀 이름으로 간지통통이라는 아재개그를 쳤는데 팀원들이 좋아해 간지통통이 되었어요. 
 
 ### 1. 멋쟁이사자처럼 멋쟁이사자처럼 12개 대학 연합해커톤, 간지톤에 참여 했어요.
+![_MG_7429](https://github.com/user-attachments/assets/edec88c3-9c62-4a9b-834f-e7e28b209be4)
 
 
-### 2. 멋쟁이사자처럼 대학 소속 연합 해커톤 🐴 干支thon : MACHTHON에 참여해 16팀 중 3등, 우수상을 수상했어요.
-- [간지톤이 뭔가요?]([https://fuchsia-prince-aea.notion.site/2025-2-23194f749d6180c58b78da7d23af448c](https://artistic-collision-d29.notion.site/2025-12-281954f3ed8b80d6ab96df86151070a4))
-- [간지톤 Instagram]([https://www.instagram.com/p/DO-hQbPk_g8/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==](https://www.instagram.com/ganzi_thon/))
 
-<div align="center">
+### 2. 멋쟁이사자처럼 대학 소속 연합 해커톤 🐴 干支thon : MACHTHON에 참여해 14팀 중 3등, 우수상을 수상했어요.
+- [간지톤이 뭔가요?](https://artistic-collision-d29.notion.site/2025-12-281954f3ed8b80d6ab96df86151070a4)
+- [간지톤 Instagram](https://www.instagram.com/ganzi_thon/)
+![2](https://github.com/user-attachments/assets/2829c1af-0b37-4a98-9c76-4feafc799aba)
 
-</div>   
+
 
